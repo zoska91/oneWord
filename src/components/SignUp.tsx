@@ -9,6 +9,7 @@ const Wrapper = styled.div`
   position: fixed;
   top: 30px;
   right: 30px;
+  z-index: 10;
 `;
 
 const SignIn: FC<SignInProps> = () => {

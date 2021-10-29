@@ -17,9 +17,12 @@ const Wrapper = styled.button`
   transition: 0.5s;
   font-size: 1rem;
   margin: 0 20px;
+  color: ${({ theme }) => theme.colorPrimary};
+  border: 2px solid transparent;
 
   :hover {
     transform: skew(0);
+    border: 2px solid ${({ theme }) => theme.colorPrimary};
   }
 `;
 

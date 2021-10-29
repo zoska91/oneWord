@@ -96,7 +96,7 @@ const bubbles = [
     left: '42vw',
     height: '30px',
     width: '30px',
-    zIndex: 2,
+    zIndex: 4,
     flyParams: { x: -0.8, y: -1, time: 30 },
   },
   {
@@ -129,7 +129,7 @@ const bubbles = [
     height: '60px',
     width: '60px',
     zIndex: 6,
-    flyParams: { x: 0.8, y: -1, time: 20 },
+    flyParams: { x: 1, y: -1.4, time: 20 },
   },
   {
     directions: 'to right',
