@@ -1,28 +1,21 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import TextareaAutosize from '@mui/material/TextareaAutosize';
 
-import SignIn from 'components/SignUp';
 import Card from 'components/Card';
 import Background from 'components/Background';
 import { Title } from 'components/atoms/Title';
+import Button from 'components/atoms/Button';
+import InputView from 'components/LearnViews/InputView';
 
 import { todayWord } from 'dummyData/words';
 import { flexCenter } from 'styles/mixins';
-import Button from 'components/atoms/Button';
+import ShowWordView from 'components/LearnViews/showWordView';
+import { learnTypes } from 'constants/constants';
+import AppearView from 'components/LearnViews/AppearView';
+import QuizView from 'components/LearnViews/QuizView';
 
 interface HomePageProps {}
-
-const BgUser = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(255, 255, 255, 0.4);
-  z-index: 3;
-`;
 
 const WordCard = styled.div`
   height: 100%;
@@ -45,25 +38,11 @@ const BasicWord = styled.p`
 
 const TransWord = styled.div`
   height: 50%;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
-  overflow-x: hidden;
+  overflow: hidden;
 
   ${flexCenter}
-`;
-const WordAnswerInput = styled(TextareaAutosize)`
-  background-color: transparent;
-  border: none;
-  padding: 10px 20px;
-  width: 100%;
-  min-width: 250px;
-  min-height: 50px;
-  font-size: 1.5rem;
-  border-bottom: 5px solid ${({ theme }) => theme.colorPrimary};
-  box-shadow: 0px 20px 15px -9px #ffffffda;
-  text-align: center;
-  color: ${({ theme }) => theme.colorPrimary};
-  letter-spacing: 1px;
 `;
 
 const Buttons = styled.div`
@@ -75,19 +54,28 @@ const Buttons = styled.div`
 `;
 
 const UserPage: FC<HomePageProps> = () => {
-  const [wordValue, setWordValue] = useState<string>('');
   const { t } = useTranslation();
+
+  const [learnType, setLearType] = useState<string>(learnTypes.QUIZ);
 
   return (
     <>
       <Background />
-      <BgUser />
       <Title>{t('todaysWord')}</Title>
       <Card>
         <WordCard>
-          <BasicWord>{todayWord.basicLang}</BasicWord>
+          <BasicWord>{todayWord.basicWord}</BasicWord>
           <TransWord>
-            <WordAnswerInput autoFocus={true} placeholder={t('yourAnswer')} />
+            {learnType === learnTypes.INPUT && <InputView />}
+            {learnType === learnTypes.SHOW_WORD && (
+              <ShowWordView transWord={todayWord.transWord} />
+            )}
+            {learnType === learnTypes.APPEAR && (
+              <AppearView transWord={todayWord.transWord} />
+            )}
+            {learnType === learnTypes.QUIZ && (
+              <QuizView answerQords={todayWord.randomWords} />
+            )}
           </TransWord>
         </WordCard>
       </Card>

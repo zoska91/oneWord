@@ -1,10 +1,10 @@
-import { Title } from 'components/atoms/Title';
-import Background from 'components/Background';
-import Card from 'components/Card';
-import SignIn from 'components/SignUp';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+
+import { Title } from 'components/atoms/Title';
+import Background from 'components/Background';
+import Card from 'components/Card';
 
 interface HomePageProps {}
 
@@ -27,8 +27,6 @@ const HomePage: FC<HomePageProps> = () => {
   return (
     <>
       <Background />
-      <SignIn />
-
       <Title>
         <span>only</span> one Word <span>a day</span>
       </Title>

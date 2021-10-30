@@ -8,4 +8,5 @@ export const en = {
   yourAnswer: `your answer`,
   submit: `Submit`,
   iKnow: `Mark this as I know`,
+  showAnswer: `Show answer`
 };

@@ -3,11 +3,13 @@ import styled from 'styled-components';
 
 interface ButtonProps {
   children: JSX.Element | string;
-  onClick: () => void;
+  onClick: () => any;
+  dark?: boolean;
 }
 
-const Wrapper = styled.button`
-  background-color: rgba(255, 255, 255, 0.5);
+const Wrapper = styled.button<{ dark: Boolean }>`
+  background-color: ${({ theme, dark }) =>
+    dark ? theme.colorPrimary : 'rgba(255, 255, 255, 0.5)'};
   border: none;
   backdrop-filter: blur(6px);
   cursor: pointer;
@@ -17,7 +19,7 @@ const Wrapper = styled.button`
   transition: 0.5s;
   font-size: 1rem;
   margin: 0 20px;
-  color: ${({ theme }) => theme.colorPrimary};
+  color: ${({ theme, dark }) => (dark ? 'white' : theme.colorPrimary)};
   border: 2px solid transparent;
 
   :hover {
@@ -26,8 +28,12 @@ const Wrapper = styled.button`
   }
 `;
 
-const Button: FC<ButtonProps> = ({ children, onClick }) => {
-  return <Wrapper onClick={onClick}>{children}</Wrapper>;
+const Button: FC<ButtonProps> = ({ children, onClick, dark }) => {
+  return (
+    <Wrapper onClick={onClick} dark={dark ? true : false}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default Button;
