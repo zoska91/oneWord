@@ -34,17 +34,17 @@ const BasicWord = styled.p`
   text-align: center;
   font-weight: bold;
   margin: 0;
-  height: 50%;
+  min-height: 30%;
   text-shadow: 2px 2px 0px #fff;
 
   ${flexCenter}
 `;
 
 const TransWord = styled.div`
-  height: 50%;
   width: 100%;
+  min-height: 50%;
   margin: 0 auto;
-  overflow: hidden;
+  flex: 1 0 auto;
 
   ${flexCenter}
 `;
@@ -62,7 +62,7 @@ const Buttons = styled.div`
 const UserPage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
-  const [learnType, setLearType] = useState<string>(learnTypes.QUIZ);
+  const [learnType, setLearType] = useState<string>(learnTypes.APPEAR);
   const [canSabmit, setCanSubmit] = useState<boolean>(false);
 
   return (
