@@ -10,10 +10,14 @@ import InputView from 'components/LearnViews/InputView';
 
 import { todayWord } from 'dummyData/words';
 import { flexCenter } from 'styles/mixins';
-import ShowWordView from 'components/LearnViews/showWordView';
+import ShowWordView from 'components/LearnViews/ShowWordView';
 import { learnTypes } from 'constants/constants';
 import AppearView from 'components/LearnViews/AppearView';
 import QuizView from 'components/LearnViews/QuizView';
+import ButtonsShowWord from 'components/ButtonsSection/ButtonsShowWord';
+import ButtonsInput from 'components/ButtonsSection/ButtonsInput';
+import ButtonsAppear from 'components/ButtonsSection/ButtonsAppear';
+import ButtonsQuiz from 'components/ButtonsSection/ButtonsQuiz';
 
 interface HomePageProps {}
 
@@ -48,15 +52,18 @@ const TransWord = styled.div`
 const Buttons = styled.div`
   position: absolute;
   bottom: 10%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   z-index: 10;
+
+  ${flexCenter}
 `;
 
 const UserPage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
   const [learnType, setLearType] = useState<string>(learnTypes.QUIZ);
+  const [canSabmit, setCanSubmit] = useState<boolean>(false);
 
   return (
     <>
@@ -80,9 +87,41 @@ const UserPage: FC<HomePageProps> = () => {
         </WordCard>
       </Card>
       <Buttons>
-        <Button onClick={() => {}}>{t('submit')}</Button>
-        <Button onClick={() => {}}>{t('iKnow')}</Button>
-        <Button onClick={() => {}}>{t('showAnswer')}</Button>
+        {learnType === learnTypes.INPUT && (
+          <ButtonsInput
+            canSabmit={canSabmit}
+            actions={{
+              submit: () => {},
+              showAnswer: () => {},
+              iKnow: () => {},
+            }}
+          />
+        )}
+        {learnType === learnTypes.SHOW_WORD && (
+          <ButtonsShowWord
+            actions={{
+              iKnow: () => {},
+              goodToKnow: () => {},
+            }}
+          />
+        )}
+        {learnType === learnTypes.APPEAR && (
+          <ButtonsAppear
+            actions={{
+              iKnow: () => {},
+              goodToKnow: () => {},
+            }}
+          />
+        )}
+        {learnType === learnTypes.QUIZ && (
+          <ButtonsQuiz
+            canSabmit={canSabmit}
+            actions={{
+              submit: () => {},
+              showAnswer: () => {},
+            }}
+          />
+        )}
       </Buttons>
     </>
   );

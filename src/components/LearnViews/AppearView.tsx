@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'components/atoms/Button';
 
@@ -17,6 +18,8 @@ const Word = styled.p`
 `;
 
 const AppearView: FC<AppearViewProps> = ({ transWord }) => {
+  const { t } = useTranslation();
+
   const [isVisible, setIsVIsible] = useState<boolean>(false);
 
   return (
@@ -25,7 +28,7 @@ const AppearView: FC<AppearViewProps> = ({ transWord }) => {
         <Word>{transWord}</Word>
       ) : (
         <Button onClick={() => setIsVIsible(prev => !prev)} dark>
-          Show translation
+          {t('showTranslate')}
         </Button>
       )}
     </>
