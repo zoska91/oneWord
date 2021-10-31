@@ -16,4 +16,5 @@ export interface Istate {
   currentAnswer: number | string | null;
   isAnswerShow: boolean;
   todaysWord: ITodaysWord;
+  closeLearn: boolean;
 }

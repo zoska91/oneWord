@@ -29,6 +29,7 @@ const inisialState: Istate = {
       },
     ],
   },
+  closeLearn: false,
 };
 
 const { useGlobalState, setGlobalState } = createGlobalState(inisialState);

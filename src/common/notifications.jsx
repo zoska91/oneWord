@@ -16,6 +16,6 @@ export const createNotification = (msg, type) => {
       break;
 
     default:
-      console.log('something wrog!');
+      null;
   }
 };

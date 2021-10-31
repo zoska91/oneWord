@@ -14,6 +14,7 @@ import AppearView from 'components/LearnViews/AppearView';
 import QuizView from 'components/LearnViews/QuizView';
 import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
 import { useGlobalState } from 'state';
+import CloseLearn from 'components/CloseLearn';
 
 interface HomePageProps {}
 
@@ -50,23 +51,28 @@ const UserPage: FC<HomePageProps> = () => {
 
   const [learnType] = useGlobalState('learnType');
   const [todaysWord] = useGlobalState('todaysWord');
+  const [closeLearn] = useGlobalState('closeLearn');
 
   return (
     <>
       <Background />
       <Title>{t('todaysWord')}</Title>
       <Card>
-        <WordCard>
-          <BasicWord>{todaysWord.basicWord}</BasicWord>
-          <TransWord>
-            {learnType === learnTypes.INPUT && <InputView />}
-            {learnType === learnTypes.SHOW_WORD && <ShowWordView />}
-            {learnType === learnTypes.APPEAR && <AppearView />}
-            {learnType === learnTypes.QUIZ && <QuizView />}
-          </TransWord>
-        </WordCard>
+        {!closeLearn ? (
+          <WordCard>
+            <BasicWord>{todaysWord.basicWord}</BasicWord>
+            <TransWord>
+              {learnType === learnTypes.INPUT && <InputView />}
+              {learnType === learnTypes.SHOW_WORD && <ShowWordView />}
+              {learnType === learnTypes.APPEAR && <AppearView />}
+              {learnType === learnTypes.QUIZ && <QuizView />}
+            </TransWord>
+          </WordCard>
+        ) : (
+          <ShowWordView />
+        )}
       </Card>
-      <ButtonsSection />
+      {!closeLearn ? <ButtonsSection /> : <CloseLearn />}
     </>
   );
 };
