@@ -4,3 +4,10 @@ export const learnTypes = {
   QUIZ: 'quiz',
   APPEAR: 'appear',
 };
+
+export const buttonTypes = {
+  I_KNOW: 'iKnow',
+  SUBMIT: 'submit',
+  SHOW_ANSWER: 'showAnswer',
+  GOOD_TO_KNOW: 'goodToKnow',
+};

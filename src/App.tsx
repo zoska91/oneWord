@@ -1,5 +1,7 @@
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import { theme } from 'styles/theme';
@@ -17,6 +19,7 @@ function App() {
           <Route exact path={routes.user} component={UserPage} />
         </Switch>
       </Router>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

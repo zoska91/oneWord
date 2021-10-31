@@ -11,4 +11,10 @@ export const en = {
   showAnswer: `Show answer`,
   goodToKnow: `Good to know`,
   showTranslate: `Show Translate`,
+  notifications: {
+    iKnow: 'We mark this word as you know. Next word will be different!',
+    goodToKnow: `It's another small step to success! Great!`,
+    dontGiveUp: `Next time will be better! Don't give up!`,
+    correctAnswer: `Greate! It's good answer. Push button 'Mark as I know' if you don't want see this word today. Otherwise  push 'Good to know'`,
+  },
 };

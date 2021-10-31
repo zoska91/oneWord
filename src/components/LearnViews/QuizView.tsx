@@ -1,9 +1,8 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { useGlobalState } from 'state';
 import styled from 'styled-components';
 
-interface QuizViewProps {
-  answerQords: string[];
-}
+interface QuizViewProps {}
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,19 +36,20 @@ const SingleAnswer = styled.button<{ active: Boolean }>`
 
 const colors = ['#733777', '#6d3796', '#5c1ca5'];
 
-const QuizView: FC<QuizViewProps> = ({ answerQords }) => {
-  const [selectedWord, setSelectWord] = useState<string>('');
+const QuizView: FC<QuizViewProps> = () => {
+  const [todaysWord] = useGlobalState('todaysWord');
+  const [currentAnswer, setCurrentAnswer] = useGlobalState('currentAnswer');
 
   return (
     <Wrapper>
-      {answerQords.map((el, i) => (
+      {todaysWord.randomWords.map((el, i) => (
         <SingleAnswer
           key={`${el}-${i}`}
-          active={el === selectedWord}
+          active={el.id === currentAnswer}
           style={{ boxShadow: `inset 7px 9px 30px -18px ${colors[i]}` }}
-          onClick={() => setSelectWord(el)}
+          onClick={() => setCurrentAnswer(el.id)}
         >
-          {el}
+          {el.text}
         </SingleAnswer>
       ))}
     </Wrapper>

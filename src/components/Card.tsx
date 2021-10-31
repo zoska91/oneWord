@@ -1,6 +1,5 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
-import { getAuth } from 'firebase/auth';
 import { flexCenter } from 'styles/mixins';
 
 const Bg = styled.div`

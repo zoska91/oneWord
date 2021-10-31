@@ -1,12 +1,11 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import Button from 'components/atoms/Button';
+import { useGlobalState } from 'state';
 
-interface AppearViewProps {
-  transWord: string;
-}
+interface AppearViewProps {}
 
 const Word = styled.p`
   color: ${({ theme }) => theme.colorPrimary};
@@ -17,17 +16,18 @@ const Word = styled.p`
   text-align: center;
 `;
 
-const AppearView: FC<AppearViewProps> = ({ transWord }) => {
+const AppearView: FC<AppearViewProps> = () => {
   const { t } = useTranslation();
 
-  const [isVisible, setIsVIsible] = useState<boolean>(false);
+  const [todaysWord] = useGlobalState('todaysWord');
+  const [isAnswerShow, setIsAnswerShow] = useGlobalState('isAnswerShow');
 
   return (
     <>
-      {isVisible ? (
-        <Word>{transWord}</Word>
+      {isAnswerShow ? (
+        <Word>{todaysWord.transWord}</Word>
       ) : (
-        <Button onClick={() => setIsVIsible(prev => !prev)} dark>
+        <Button onClick={() => setIsAnswerShow(prev => !prev)} dark>
           {t('showTranslate')}
         </Button>
       )}

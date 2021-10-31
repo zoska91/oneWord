@@ -1,23 +1,19 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
 import Card from 'components/Card';
 import Background from 'components/Background';
 import { Title } from 'components/atoms/Title';
-import Button from 'components/atoms/Button';
 import InputView from 'components/LearnViews/InputView';
 
-import { todayWord } from 'dummyData/words';
 import { flexCenter } from 'styles/mixins';
 import ShowWordView from 'components/LearnViews/ShowWordView';
 import { learnTypes } from 'constants/constants';
 import AppearView from 'components/LearnViews/AppearView';
 import QuizView from 'components/LearnViews/QuizView';
-import ButtonsShowWord from 'components/ButtonsSection/ButtonsShowWord';
-import ButtonsInput from 'components/ButtonsSection/ButtonsInput';
-import ButtonsAppear from 'components/ButtonsSection/ButtonsAppear';
-import ButtonsQuiz from 'components/ButtonsSection/ButtonsQuiz';
+import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
+import { useGlobalState } from 'state';
 
 interface HomePageProps {}
 
@@ -49,21 +45,11 @@ const TransWord = styled.div`
   ${flexCenter}
 `;
 
-const Buttons = styled.div`
-  position: absolute;
-  bottom: 10%;
-  left: 0;
-  right: 0;
-  z-index: 10;
-
-  ${flexCenter}
-`;
-
 const UserPage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
-  const [learnType, setLearType] = useState<string>(learnTypes.APPEAR);
-  const [canSabmit, setCanSubmit] = useState<boolean>(false);
+  const [learnType] = useGlobalState('learnType');
+  const [todaysWord] = useGlobalState('todaysWord');
 
   return (
     <>
@@ -71,58 +57,16 @@ const UserPage: FC<HomePageProps> = () => {
       <Title>{t('todaysWord')}</Title>
       <Card>
         <WordCard>
-          <BasicWord>{todayWord.basicWord}</BasicWord>
+          <BasicWord>{todaysWord.basicWord}</BasicWord>
           <TransWord>
             {learnType === learnTypes.INPUT && <InputView />}
-            {learnType === learnTypes.SHOW_WORD && (
-              <ShowWordView transWord={todayWord.transWord} />
-            )}
-            {learnType === learnTypes.APPEAR && (
-              <AppearView transWord={todayWord.transWord} />
-            )}
-            {learnType === learnTypes.QUIZ && (
-              <QuizView answerQords={todayWord.randomWords} />
-            )}
+            {learnType === learnTypes.SHOW_WORD && <ShowWordView />}
+            {learnType === learnTypes.APPEAR && <AppearView />}
+            {learnType === learnTypes.QUIZ && <QuizView />}
           </TransWord>
         </WordCard>
       </Card>
-      <Buttons>
-        {learnType === learnTypes.INPUT && (
-          <ButtonsInput
-            canSabmit={canSabmit}
-            actions={{
-              submit: () => {},
-              showAnswer: () => {},
-              iKnow: () => {},
-            }}
-          />
-        )}
-        {learnType === learnTypes.SHOW_WORD && (
-          <ButtonsShowWord
-            actions={{
-              iKnow: () => {},
-              goodToKnow: () => {},
-            }}
-          />
-        )}
-        {learnType === learnTypes.APPEAR && (
-          <ButtonsAppear
-            actions={{
-              iKnow: () => {},
-              goodToKnow: () => {},
-            }}
-          />
-        )}
-        {learnType === learnTypes.QUIZ && (
-          <ButtonsQuiz
-            canSabmit={canSabmit}
-            actions={{
-              submit: () => {},
-              showAnswer: () => {},
-            }}
-          />
-        )}
-      </Buttons>
+      <ButtonsSection />
     </>
   );
 };
