@@ -34,7 +34,7 @@ const SingleAnswer = styled.button<{ active: Boolean }>`
   }
 `;
 
-const colors = ['#733777', '#6d3796', '#5c1ca5'];
+const colors = ['#8d6e8f', '#6d3796', '#5c1ca5'];
 
 const QuizView: FC<QuizViewProps> = () => {
   const [todaysWord] = useGlobalState('todaysWord');

@@ -3,14 +3,16 @@ import styled, { css } from 'styled-components';
 
 interface ButtonProps {
   children: JSX.Element | string;
-  onClick: () => any;
+  onClick?: () => any;
   dark?: boolean;
   disabled?: boolean;
+  small?: boolean;
 }
 
 interface styleWrapperProps {
   dark: Boolean;
   disabled?: boolean;
+  small?: boolean;
 }
 
 const Wrapper = styled.button<styleWrapperProps>`
@@ -19,7 +21,7 @@ const Wrapper = styled.button<styleWrapperProps>`
   border: none;
   backdrop-filter: blur(6px);
   cursor: pointer;
-  padding: 20px 50px;
+  padding: ${({ small }) => (small ? '10px 30px' : '20px 50px')};
   border-radius: 20px;
   transform: skew(-10deg, 0);
   transition: 0.5s;
@@ -27,7 +29,7 @@ const Wrapper = styled.button<styleWrapperProps>`
   margin: 0 20px;
   color: ${({ theme, dark }) => (dark ? 'white' : theme.colorPrimary)};
   border: 2px solid transparent;
-  min-width: 200px;
+  min-width: ${({ small }) => (small ? '130px' : '200px')};
   box-shadow: 7px 5px 17px -1px rgba(0, 0, 0, 0.38);
 
   :hover {
@@ -50,9 +52,20 @@ const Wrapper = styled.button<styleWrapperProps>`
     `}
 `;
 
-const Button: FC<ButtonProps> = ({ children, onClick, dark, disabled }) => {
+const Button: FC<ButtonProps> = ({
+  children,
+  onClick,
+  dark,
+  disabled,
+  small,
+}) => {
   return (
-    <Wrapper onClick={onClick} dark={dark ? true : false} disabled={disabled}>
+    <Wrapper
+      onClick={onClick}
+      dark={dark ? true : false}
+      disabled={disabled}
+      small={small}
+    >
       {children}
     </Wrapper>
   );

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 interface ButtonSectionProps {}
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 10%;
   left: 0;
   right: 0;

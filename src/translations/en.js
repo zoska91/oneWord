@@ -18,4 +18,7 @@ export const en = {
     correctAnswer: `Greate! It's good answer. Push button 'Mark as I know' if you don't want see this word today. Otherwise  push 'Good to know'`,
   },
   closeLearn: `Take a break! We will let you know when it's time to learn :)`,
+  addNewWord: `Add new word!`,
+  preferencesButton: 'Preferences',
+  addWordButton: 'Add word',
 };
