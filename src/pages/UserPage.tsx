@@ -15,8 +15,7 @@ import QuizView from 'components/LearnViews/QuizView';
 import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
 import { useGlobalState } from 'state';
 import CloseLearn from 'components/CloseLearn';
-import AsideButton from 'components/atoms/AsideButton';
-import AddWordModal from 'components/ModalForm/AddWordModal';
+import AddWordModal from 'components/ModalForm/ModalForm';
 
 interface HomePageProps {}
 

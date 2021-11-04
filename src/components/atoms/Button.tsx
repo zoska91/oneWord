@@ -7,6 +7,7 @@ interface ButtonProps {
   dark?: boolean;
   disabled?: boolean;
   small?: boolean;
+  type?: 'button' | 'reset' | 'submit' | undefined;
 }
 
 interface styleWrapperProps {
@@ -58,6 +59,7 @@ const Button: FC<ButtonProps> = ({
   dark,
   disabled,
   small,
+  type = 'button',
 }) => {
   return (
     <Wrapper
@@ -65,6 +67,7 @@ const Button: FC<ButtonProps> = ({
       dark={dark ? true : false}
       disabled={disabled}
       small={small}
+      type={type}
     >
       {children}
     </Wrapper>

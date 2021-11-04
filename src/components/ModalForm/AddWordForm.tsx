@@ -87,7 +87,7 @@ const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
         <Button small onClick={onClose}>
           Close
         </Button>
-        <Button dark small>
+        <Button dark small type='submit'>
           zapisz
         </Button>
       </ModalFooter>

@@ -21,4 +21,25 @@ export const en = {
   addNewWord: `Add new word!`,
   preferencesButton: 'Preferences',
   addWordButton: 'Add word',
+  selectLanguage: 'Select language',
+  preferencesForm: {
+    title: 'Preferences',
+    selectLanguageYouWantToLearn: 'Select language you want to learn',
+    addDailyNotification: 'Add daily notification',
+    weSelectedLangs: 'we selected those languages from your added words',
+    itIsTheClue:
+      'This is main point of this app. We will remind you of one word every day, at the times you choose, in the forms you choose',
+    selectTypeOfLearn: 'Select type of learn',
+    summary: 'Do you want summary of every week?',
+    summaryDesc:
+      'If you check this, once a week you will get as many notifications (instead of a new word) as many words you learned this week with those words',
+    selectDay: 'Select day when you want to have summary',
+    selectDayPlaceholder: 'Select day...',
+    break: 'Do you want day break?',
+    breakDesc: `If you check this, one day you won't recive notification with new word`,
+    selectDayBreak: 'Select day when you want to have break',
+    selectDayBreakPlaceholder: 'Select day...',
+  },
+
+  addWordTitle: 'Add word',
 };
