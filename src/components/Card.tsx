@@ -6,7 +6,7 @@ const Bg = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) skew(-5deg, 0);
+  transform: translate(-50%, -50%);
   height: 50vh;
   width: 40vw;
   min-width: 240px;
