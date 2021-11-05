@@ -34,17 +34,12 @@ const ButtonsSection: FC<ButtonSectionProps> = () => {
       <Button onClick={iKnow}>{t('iKnow')}</Button>
 
       {(learnType === learnTypes.INPUT || learnType === learnTypes.QUIZ) && (
-        <Button
-          onClick={() => submit(learnType)}
-          dark
-          disabled={!currentAnswer || blockSubmit}
-        >
+        <Button onClick={() => submit(learnType)} dark disabled={!currentAnswer || blockSubmit}>
           {t('submit')}
         </Button>
       )}
 
-      {(learnType === learnTypes.QUIZ ||
-        learnType === learnTypes.SHOW_WORD) && (
+      {(learnType === learnTypes.QUIZ || learnType === learnTypes.SHOW_WORD) && (
         <Button onClick={showAnswer}>{t('showAnswer')}</Button>
       )}
 

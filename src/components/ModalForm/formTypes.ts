@@ -1,7 +1,7 @@
 export interface IInputsAddWord {
   basicWord: string;
   transWord: string;
-  lang: string;
+  addLang: string;
 }
 
 interface ISingleNotification {
@@ -12,5 +12,8 @@ interface ISingleNotification {
 export interface IInputsPreferences {
   notifications: ISingleNotification[];
   lang: string;
-  summary: ['week', 'month', 'none'];
+  isSummary: boolean;
+  summaryDay: ['week', 'month', 'none'];
+  isBreak: boolean;
+  breakDay: ['week', 'month', 'none'];
 }

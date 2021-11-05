@@ -40,7 +40,7 @@ const AddWordModal: FC<AddWordModalProps> = ({ type }) => {
   return (
     <>
       <AsideButton
-        label={t(`${type}Button`)}
+        label={t(`form.${type}Title`)}
         top={type === 'addWord' ? 20 : 45}
         onClick={onOpen}
       />
@@ -55,9 +55,7 @@ const AddWordModal: FC<AddWordModalProps> = ({ type }) => {
 
         <StyledModalContent bg='rgba(255,255,255, 0.6)' borderRadius='30'>
           <StyledModalHeader fontSize='4xl'>
-            {t(
-              type === 'addWord' ? 'addNewWordTitle' : 'preferencesForm.title'
-            )}
+            {t(`form.${type}Title`)}
           </StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>

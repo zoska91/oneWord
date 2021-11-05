@@ -53,14 +53,7 @@ const Wrapper = styled.button<styleWrapperProps>`
     `}
 `;
 
-const Button: FC<ButtonProps> = ({
-  children,
-  onClick,
-  dark,
-  disabled,
-  small,
-  type = 'button',
-}) => {
+const Button: FC<ButtonProps> = ({ children, onClick, dark, disabled, small, type = 'button' }) => {
   return (
     <Wrapper
       onClick={onClick}
