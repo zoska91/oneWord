@@ -15,6 +15,7 @@ import QuizView from 'components/LearnViews/QuizView';
 import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
 import { useGlobalState } from 'state';
 import CloseLearn from 'components/CloseLearn';
+import AddWordModal from 'components/ModalForm/ModalForm';
 
 interface HomePageProps {}
 
@@ -73,6 +74,9 @@ const UserPage: FC<HomePageProps> = () => {
         )}
       </Card>
       {!closeLearn ? <ButtonsSection /> : <CloseLearn />}
+
+      <AddWordModal type='addWord' />
+      <AddWordModal type='preferences' />
     </>
   );
 };

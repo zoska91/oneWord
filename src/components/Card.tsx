@@ -22,12 +22,12 @@ const Bg = styled.div`
 `;
 
 const TextWrapper = styled.div`
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 50vh;
   width: 40vw;
-  position: absolute;
   transition: 0.3s;
   z-index: 10;
   padding: 30px;
