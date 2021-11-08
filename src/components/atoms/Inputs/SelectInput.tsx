@@ -27,7 +27,7 @@ const SelectField: FC<SelectFieldProps> = ({ name, required, desc, options, labe
   const { t } = useTranslation();
 
   return (
-    <FormControl isInvalid={Boolean(errors.lang)}>
+    <FormControl isInvalid={Boolean(errors[name])}>
       {label ? label : <FormLabel>{t(`form.${name}Label`)}</FormLabel>}
       {desc && <Desc>{t(`form.${name}Desc`)}</Desc>}
       <Select

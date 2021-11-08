@@ -9,8 +9,7 @@ interface LabelType {
 }
 
 export const ActionButton = styled.button<ButtonType>`
-  background-color: ${({ theme, isAdd }) =>
-    isAdd ? theme.colorPrimary : theme.colorLight};
+  background-color: ${({ theme, isAdd }) => (isAdd ? theme.colorPrimary : theme.colorLight)};
   border-radius: 50%;
   border: none;
   height: 30px;

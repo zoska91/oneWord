@@ -1,13 +1,12 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
+import { flexCenter } from 'styles/mixins';
 import Card from 'components/Card';
 import Background from 'components/Background';
 import { Title } from 'components/atoms/Title';
 import InputView from 'components/LearnViews/InputView';
-
-import { flexCenter } from 'styles/mixins';
 import ShowWordView from 'components/LearnViews/ShowWordView';
 import { learnTypes } from 'constants/constants';
 import AppearView from 'components/LearnViews/AppearView';
@@ -16,6 +15,8 @@ import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
 import { useGlobalState } from 'state';
 import CloseLearn from 'components/CloseLearn';
 import AddWordModal from 'components/ModalForm/ModalForm';
+
+import { getCurrentUser } from 'db/auth';
 
 interface HomePageProps {}
 
@@ -54,6 +55,15 @@ const UserPage: FC<HomePageProps> = () => {
   const [todaysWord] = useGlobalState('todaysWord');
   const [closeLearn] = useGlobalState('closeLearn');
 
+  useEffect(() => {
+    try {
+      const resp = getCurrentUser();
+      console.log(resp);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   return (
     <>
       <Background />
@@ -75,8 +85,8 @@ const UserPage: FC<HomePageProps> = () => {
       </Card>
       {!closeLearn ? <ButtonsSection /> : <CloseLearn />}
 
-      <AddWordModal type='addWord' />
-      <AddWordModal type='preferences' />
+      <AddWordModal type='addWord' top={20} />
+      <AddWordModal type='preferences' top={45} modalSize='4xl' />
     </>
   );
 };
