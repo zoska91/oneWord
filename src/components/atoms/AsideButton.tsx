@@ -5,10 +5,12 @@ interface AsideButtonProps {
   label: string;
   top: number;
   onClick: () => void;
+  small?: boolean;
 }
 
 interface WrapperStyled {
   top: number;
+  small?: boolean;
 }
 
 const Wrapper = styled.div<WrapperStyled>`
@@ -18,7 +20,7 @@ const Wrapper = styled.div<WrapperStyled>`
   top: ${({ top }) => top}vh;
   right: 0;
   writing-mode: vertical-lr;
-  padding: 30px 20px;
+  padding: ${({ small }) => (small ? '20px 10px' : '30px 20px')};
   transform: skewY(-10deg);
   border-radius: 10px 0 0 10px;
   cursor: pointer;
@@ -26,17 +28,19 @@ const Wrapper = styled.div<WrapperStyled>`
   box-shadow: -8px 5px 15px 1px #868686a7;
   text-transform: uppercase;
   letter-spacing: 2px;
-  font-weight: bold;
+  font-weight: ${({ small }) => (small ? 'normal' : 'bold')};
+  font-size: ${({ small }) => (small ? '0.7rem' : '1rem')};
+  z-index: 11; //more than buttonsSection
 
   &:hover {
-    padding: 30px;
+    padding: ${({ small }) => (small ? '20px 15px' : '30px')};
     box-shadow: -12px 5px 15px 3px #868686b9;
   }
 `;
 
-const AsideButton: FC<AsideButtonProps> = ({ label, top, onClick }) => {
+const AsideButton: FC<AsideButtonProps> = ({ label, top, onClick, small }) => {
   return (
-    <Wrapper top={top} onClick={onClick}>
+    <Wrapper top={top} onClick={onClick} small={small}>
       {label}
     </Wrapper>
   );

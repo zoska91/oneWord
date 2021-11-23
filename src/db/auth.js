@@ -4,7 +4,6 @@ import {
   signOut,
   signInWithPopup,
   onAuthStateChanged,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import firebase from 'firebase/compat/app';
@@ -17,22 +16,18 @@ if (!firebase.apps.length) {
 
 const provider = new GoogleAuthProvider();
 
-export const singInByGoogle = () => {
+export const singInByGoogle = async () => {
   const auth = getAuth();
-  signInWithPopup(auth, provider)
-    .then(result => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      return { token, user };
-    })
-    .catch(error => {
-      // const errorCode = error.code;
-      // const errorMessage = error.message;
-      // const email = error.email;
-      // const credential = GoogleAuthProvider.credentialFromError(error);
-      throw error;
-    });
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const user = result.user;
+    return { token, user };
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
 };
 
 export const loginByEmail = async (email, password) => {
@@ -47,26 +42,20 @@ export const loginByEmail = async (email, password) => {
   }
 };
 
-export const logOut = () => {
+export const logOut = async () => {
   const auth = getAuth();
-
-  signOut(auth)
-    .then(() => {
-      return 'success';
-    })
-    .catch(error => {
-      throw error;
-    });
+  try {
+    await signOut(auth);
+    return 'success';
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 export const getCurrentUser = () => {
   const auth = getAuth();
   onAuthStateChanged(auth, user => {
-    if (user) {
-      // const uid = user.uid;
-      return user;
-    } else {
-      return null;
-    }
+    console.log(user);
   });
 };

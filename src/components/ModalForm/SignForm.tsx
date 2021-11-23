@@ -32,10 +32,17 @@ const SignForm: FC<SignFormProps> = ({ onClose }) => {
       })
       .catch(error => {
         if (error.code === 'auth/weak-password') createNotification(t('api.weakPassword'), 'error');
+
         if (error.code === 'auth/email-already-in-use')
           createNotification(t('api.existsMail'), 'error');
+
         throw { code: error.code, error: error.message };
       });
+  };
+
+  const googleSubmit = async () => {
+    const result = await singInByGoogle();
+    if (result.token) setRedirect(true);
   };
 
   return (
@@ -44,7 +51,7 @@ const SignForm: FC<SignFormProps> = ({ onClose }) => {
         <Redirect to='/user' />
       ) : (
         <FormProvider {...methods}>
-          <GoogleButton onClick={singInByGoogle} />
+          <GoogleButton onClick={googleSubmit} />
 
           <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '50px 50px 20px' }}>
             <Stack spacing={6}>
