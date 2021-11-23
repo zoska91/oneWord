@@ -17,3 +17,11 @@ export interface IInputsPreferences {
   isBreak: boolean;
   breakDay: ['week', 'month', 'none'];
 }
+
+export interface IAuth {
+  email: string;
+  password: string;
+}
+export interface IPasswordReminder {
+  email: string;
+}

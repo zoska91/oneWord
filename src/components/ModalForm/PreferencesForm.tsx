@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler, useFieldArray, FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Stack, ModalFooter, Grid, Box } from '@chakra-ui/react';
+import { Stack, Grid, Box } from '@chakra-ui/react';
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons';
 
 import * as S from './Form.css';
 import { IInputsPreferences } from './formTypes';
 import useGenerateOptionsFields from './useGenereteOptionsFields';
-import Button from 'components/atoms/Button';
 import SelectField from 'components/atoms/Inputs/SelectInput';
 import CheckboxField from 'components/atoms/Inputs/CheckboxField';
 import InputField from 'components/atoms/Inputs/InputField';
+import ModalFooter from './ModalFooter';
 
 interface PreferencesFormProps {
   onClose: () => void;
@@ -85,15 +85,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
             </Stack>
           </Box>
         </Grid>
-
-        <ModalFooter justifyContent='space-evenly' style={{ paddingTop: '80px' }}>
-          <Button small onClick={onClose}>
-            Close
-          </Button>
-          <Button dark small type='submit'>
-            zapisz
-          </Button>
-        </ModalFooter>
+        <ModalFooter onClose={onClose} />
       </form>
     </FormProvider>
   );

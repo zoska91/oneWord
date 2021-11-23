@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { Title } from 'components/atoms/Title';
 import Background from 'components/Background';
 import Card from 'components/Card';
+import Button from 'components/atoms/Button';
+import ModalForm from 'components/ModalForm/ModalForm';
 
 interface HomePageProps {}
 
@@ -36,9 +38,11 @@ const HomePage: FC<HomePageProps> = () => {
           <h4>{t('welcome2')}</h4>
           <h4>{t('welcome3')}</h4>
           <h2>{t('welcome4')}</h2>
-          <h3>{t('welcome5')}</h3>
+          <Button dark>{t('welcome5')}</Button>
         </WelcomeCard>
       </Card>
+      <ModalForm type='login' top={20} />
+      <ModalForm type='signin' top={38} />
     </>
   );
 };

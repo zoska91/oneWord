@@ -19,6 +19,12 @@ export const en = {
   },
   closeLearn: `Take a break! We will let you know when it's time to learn :)`,
 
+  buttons: {
+    close: 'Close',
+    submit: 'Submit',
+    withGoogle: `Let's go with Google`,
+  },
+
   form: {
     addWordTitle: 'Add word',
     preferencesTitle: 'Preferences',
@@ -57,6 +63,15 @@ export const en = {
     addDailyNotification: 'Add daily notification',
     itIsTheClue:
       'This is main point of this app. We will remind you of one word every day, at the times you choose, in the forms you choose',
+
+    // auth
+    loginTitle: 'Log in',
+    signinTitle: 'Sign in',
+
+    emailLabel: 'Email',
+    emailPlaceholder: 'Set login',
+    passwordLabel: 'Password',
+    passwordPlaceholder: 'Set password',
   },
   days: {
     1: 'Monday',
@@ -66,5 +81,13 @@ export const en = {
     5: 'Friday',
     6: 'Saturday',
     7: 'Sunday',
+  },
+
+  api: {
+    success: 'Everything went great!',
+    error: 'Something went wrong',
+    weakPassword: 'Password should be at least 6 characters',
+    existsMail: 'This mail already exists',
+    userNotFound: 'User not found',
   },
 };

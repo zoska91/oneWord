@@ -1,13 +1,13 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
+import { Redirect } from 'react-router';
 
+import { flexCenter } from 'styles/mixins';
 import Card from 'components/Card';
 import Background from 'components/Background';
 import { Title } from 'components/atoms/Title';
 import InputView from 'components/LearnViews/InputView';
-
-import { flexCenter } from 'styles/mixins';
 import ShowWordView from 'components/LearnViews/ShowWordView';
 import { learnTypes } from 'constants/constants';
 import AppearView from 'components/LearnViews/AppearView';
@@ -15,7 +15,11 @@ import QuizView from 'components/LearnViews/QuizView';
 import ButtonsSection from 'components/ButtonsSection/ButtonsSection';
 import { useGlobalState } from 'state';
 import CloseLearn from 'components/CloseLearn';
-import AddWordModal from 'components/ModalForm/ModalForm';
+import ModalForm from 'components/ModalForm/ModalForm';
+
+import { logOut } from 'db/auth';
+import AsideButton from 'components/atoms/AsideButton';
+import { getAuth, onAuthStateChanged } from '@firebase/auth';
 
 interface HomePageProps {}
 
@@ -48,35 +52,55 @@ const TransWord = styled.div`
 `;
 
 const UserPage: FC<HomePageProps> = () => {
+  const [redirect, setRedirect] = useState<boolean>(false);
   const { t } = useTranslation();
 
   const [learnType] = useGlobalState('learnType');
   const [todaysWord] = useGlobalState('todaysWord');
   const [closeLearn] = useGlobalState('closeLearn');
 
+  useEffect(() => {
+    const auth = getAuth();
+    onAuthStateChanged(auth, user => {
+      if (!user) setRedirect(true);
+    });
+  }, []);
+
+  const handleLogout = async () => {
+    const result = await logOut();
+    if (result === 'success') setRedirect(true);
+  };
+
   return (
     <>
-      <Background />
-      <Title>{t('todaysWord')}</Title>
-      <Card>
-        {!closeLearn ? (
-          <WordCard>
-            <BasicWord>{todaysWord.basicWord}</BasicWord>
-            <TransWord>
-              {learnType === learnTypes.INPUT && <InputView />}
-              {learnType === learnTypes.SHOW_WORD && <ShowWordView />}
-              {learnType === learnTypes.APPEAR && <AppearView />}
-              {learnType === learnTypes.QUIZ && <QuizView />}
-            </TransWord>
-          </WordCard>
-        ) : (
-          <ShowWordView />
-        )}
-      </Card>
-      {!closeLearn ? <ButtonsSection /> : <CloseLearn />}
+      {redirect ? (
+        <Redirect to='/' />
+      ) : (
+        <>
+          <Background />
+          <Title>{t('todaysWord')}</Title>
+          <Card>
+            {!closeLearn ? (
+              <WordCard>
+                <BasicWord>{todaysWord.basicWord}</BasicWord>
+                <TransWord>
+                  {learnType === learnTypes.INPUT && <InputView />}
+                  {learnType === learnTypes.SHOW_WORD && <ShowWordView />}
+                  {learnType === learnTypes.APPEAR && <AppearView />}
+                  {learnType === learnTypes.QUIZ && <QuizView />}
+                </TransWord>
+              </WordCard>
+            ) : (
+              <ShowWordView />
+            )}
+          </Card>
+          {!closeLearn ? <ButtonsSection /> : <CloseLearn />}
 
-      <AddWordModal type='addWord' />
-      <AddWordModal type='preferences' />
+          <ModalForm type='addWord' top={20} />
+          <ModalForm type='preferences' top={45} modalSize='4xl' />
+          <AsideButton small label={t(`logout`)} top={80} onClick={handleLogout} />
+        </>
+      )}
     </>
   );
 };

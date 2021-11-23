@@ -14,9 +14,13 @@ import {
 import AsideButton from '../atoms/AsideButton';
 import AddWordForm from './AddWordForm';
 import PreferencesForm from './PreferencesForm';
+import LoginForm from './LoginForm';
+import SignForm from './SignForm';
 
-interface AddWordModalProps {
+interface ModalFormProps {
   type: string;
+  top: number;
+  modalSize?: string;
 }
 
 const StyledModalContent = styled(ModalContent)`
@@ -32,35 +36,26 @@ const StyledModalHeader = styled(ModalHeader)`
   font-family: 'Josefin Sans', sans-serif;
 `;
 
-const AddWordModal: FC<AddWordModalProps> = ({ type }) => {
+const ModalForm: FC<ModalFormProps> = ({ type, top, modalSize = '2xl' }) => {
   const { t } = useTranslation();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <AsideButton
-        label={t(`form.${type}Title`)}
-        top={type === 'addWord' ? 20 : 45}
-        onClick={onOpen}
-      />
+      <AsideButton label={t(`form.${type}Title`)} top={top} onClick={onOpen} />
 
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size={type === 'addWord' ? '2xl' : '4xl'}
-      >
+      <Modal isOpen={isOpen} onClose={onClose} isCentered size={modalSize}>
         <ModalOverlay />
 
         <StyledModalContent bg='rgba(255,255,255, 0.6)' borderRadius='30'>
-          <StyledModalHeader fontSize='4xl'>
-            {t(`form.${type}Title`)}
-          </StyledModalHeader>
+          <StyledModalHeader fontSize='4xl'>{t(`form.${type}Title`)}</StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {type === 'addWord' && <AddWordForm onClose={onClose} />}
             {type === 'preferences' && <PreferencesForm onClose={onClose} />}
+            {type === 'login' && <LoginForm onClose={onClose} />}
+            {type === 'signin' && <SignForm onClose={onClose} />}
           </ModalBody>
         </StyledModalContent>
       </Modal>
@@ -68,4 +63,4 @@ const AddWordModal: FC<AddWordModalProps> = ({ type }) => {
   );
 };
 
-export default AddWordModal;
+export default ModalForm;
