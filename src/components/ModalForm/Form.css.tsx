@@ -9,7 +9,8 @@ interface LabelType {
 }
 
 export const ActionButton = styled.button<ButtonType>`
-  background-color: ${({ theme, isAdd }) => (isAdd ? theme.colorPrimary : theme.colorLight)};
+  background-color: ${({ theme, isAdd }) =>
+    isAdd ? theme.colorPrimary : theme.colorLight};
   border-radius: 50%;
   border: none;
   height: 30px;
@@ -18,6 +19,10 @@ export const ActionButton = styled.button<ButtonType>`
   margin: 0 10px 10px;
   transition: 0.3s;
   box-shadow: 4px 5px 8px -3px ${({ theme }) => theme.colorPrimary};
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   :hover {
     transform: scale(1.1);

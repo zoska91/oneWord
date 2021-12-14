@@ -8,6 +8,7 @@ import InputField from 'components/atoms/Inputs/InputField';
 import SelectField from 'components/atoms/Inputs/SelectInput';
 import useGenerateOptionsFields from './useGenereteOptionsFields';
 import ModalFooter from './ModalFooter';
+import { addWordAPI } from 'db/API/words';
 
 interface AddWordFormProps {
   onClose: () => void;
@@ -19,11 +20,17 @@ const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
   const methods = useForm<IInputsAddWord>();
   const { handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<IInputsAddWord> = data => console.log(data);
+  const onSubmit: SubmitHandler<IInputsAddWord> = data => {
+    console.log(data);
+    addWordAPI({ ...data });
+  };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '50px 50px 20px' }}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        style={{ padding: '50px 50px 20px' }}
+      >
         <Stack spacing={6}>
           <InputField name='basicWord' required />
           <InputField name='transWord' required />

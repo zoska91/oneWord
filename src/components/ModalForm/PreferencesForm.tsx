@@ -1,5 +1,10 @@
 import { FC } from 'react';
-import { useForm, SubmitHandler, useFieldArray, FormProvider } from 'react-hook-form';
+import {
+  useForm,
+  SubmitHandler,
+  useFieldArray,
+  FormProvider,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Stack, Grid, Box } from '@chakra-ui/react';
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons';
@@ -18,8 +23,16 @@ interface PreferencesFormProps {
 
 const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
-  const { selectLanguageOptions, daysOptions, learnTypesOptions } = useGenerateOptionsFields();
-  const methods = useForm();
+  const { selectLanguageOptions, daysOptions, learnTypesOptions } =
+    useGenerateOptionsFields();
+  const methods = useForm({
+    defaultValues: {
+      selectLanguage: { label: 'English', value: 'en' },
+      isSummary: true,
+      isBreak: true,
+      notifications: [{}],
+    },
+  });
   const { control, handleSubmit, watch } = methods;
 
   const { fields, append, remove } = useFieldArray({
@@ -38,13 +51,22 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
         <Grid gap={16} templateColumns='repeat(2, 1fr)'>
           <Box>
             <Stack>
-              <SelectField name='selectLanguage' options={selectLanguageOptions} required desc />
+              <SelectField
+                name='selectLanguage'
+                options={selectLanguageOptions}
+                required
+                desc
+              />
 
               <CheckboxField name='isSummary' desc />
-              {watchSmmary && <SelectField name='summaryDay' options={daysOptions} required />}
+              {watchSmmary && (
+                <SelectField name='summaryDay' options={daysOptions} required />
+              )}
 
               <CheckboxField name='isBreak' desc />
-              {watchBreak && <SelectField name='breakDay' options={daysOptions} required />}
+              {watchBreak && (
+                <SelectField name='breakDay' options={daysOptions} required />
+              )}
             </Stack>
           </Box>
 
@@ -65,7 +87,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
               <S.Desc>{t('form.itIsTheClue')}</S.Desc>
 
               {fields.map((item, index) => (
-                <Stack spacing={4} key={item.id}>
+                <Stack spacing={4} key={`${item.id}-${index}`}>
                   <SelectField
                     name={`notifications.${index}.type`}
                     options={learnTypesOptions}
@@ -73,13 +95,21 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
                     label={
                       <S.FormLabel>
                         <p>{index + 1}. notification</p>
-                        <S.ActionButton type='button' onClick={() => remove(index)}>
+                        <S.ActionButton
+                          type='button'
+                          onClick={() => remove(index)}
+                        >
                           <DeleteIcon />
                         </S.ActionButton>
                       </S.FormLabel>
                     }
                   />
-                  <InputField name={`notifications.${index}.time`} required type='time' noLabel />
+                  <InputField
+                    name={`notifications.${index}.time`}
+                    required
+                    type='time'
+                    noLabel
+                  />
                 </Stack>
               ))}
             </Stack>

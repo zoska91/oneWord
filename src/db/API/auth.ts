@@ -3,26 +3,20 @@ import {
   getAuth,
   signOut,
   signInWithPopup,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
-import firebase from 'firebase/compat/app';
-import 'firebase/firestore';
-import { firebaseConfig } from './config';
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
 
 const provider = new GoogleAuthProvider();
 
 export const singInByGoogle = async () => {
   const auth = getAuth();
+
   try {
     const result = await signInWithPopup(auth, provider);
     const credential = GoogleAuthProvider.credentialFromResult(result);
-    const token = credential.accessToken;
+    const token = credential?.accessToken;
     const user = result.user;
+
     return { token, user };
   } catch (e) {
     console.error(e);
@@ -30,7 +24,7 @@ export const singInByGoogle = async () => {
   }
 };
 
-export const loginByEmail = async (email, password) => {
+export const loginByEmail = async (email: string, password: string) => {
   const auth = getAuth();
 
   try {
@@ -38,6 +32,7 @@ export const loginByEmail = async (email, password) => {
     const user = resp.user;
     return user;
   } catch (e) {
+    // @ts-ignore
     return { code: e.code, message: e.message };
   }
 };
@@ -55,7 +50,8 @@ export const logOut = async () => {
 
 export const getCurrentUser = () => {
   const auth = getAuth();
-  onAuthStateChanged(auth, user => {
-    console.log(user);
-  });
+  const user = auth.currentUser;
+  const userId = user?.uid;
+
+  return { userId, user };
 };

@@ -17,9 +17,10 @@ import { useGlobalState } from 'state';
 import CloseLearn from 'components/CloseLearn';
 import ModalForm from 'components/ModalForm/ModalForm';
 
-import { logOut } from 'db/auth';
+import { logOut } from 'db/API/auth';
 import AsideButton from 'components/atoms/AsideButton';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
+import { getTodayWordAPI } from 'db/API/words';
 
 interface HomePageProps {}
 
@@ -52,6 +53,7 @@ const TransWord = styled.div`
 `;
 
 const UserPage: FC<HomePageProps> = () => {
+  const [loading, setLoading] = useState(true);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { t } = useTranslation();
 
@@ -61,8 +63,18 @@ const UserPage: FC<HomePageProps> = () => {
 
   useEffect(() => {
     const auth = getAuth();
+    setLoading(true);
+
+    const getTodayWord = async () => {
+      const word = await getTodayWordAPI();
+      console.log(word);
+    };
+
     onAuthStateChanged(auth, user => {
       if (!user) setRedirect(true);
+
+      getTodayWord();
+      setLoading(false);
     });
   }, []);
 
@@ -70,6 +82,8 @@ const UserPage: FC<HomePageProps> = () => {
     const result = await logOut();
     if (result === 'success') setRedirect(true);
   };
+
+  if (loading) return <div>loading...</div>;
 
   return (
     <>
@@ -98,7 +112,12 @@ const UserPage: FC<HomePageProps> = () => {
 
           <ModalForm type='addWord' top={20} />
           <ModalForm type='preferences' top={45} modalSize='4xl' />
-          <AsideButton small label={t(`logout`)} top={80} onClick={handleLogout} />
+          <AsideButton
+            small
+            label={t(`logout`)}
+            top={80}
+            onClick={handleLogout}
+          />
         </>
       )}
     </>

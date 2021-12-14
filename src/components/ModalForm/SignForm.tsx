@@ -8,10 +8,11 @@ import { IAuth } from './formTypes';
 import InputField from 'components/atoms/Inputs/InputField';
 import ModalFooter from './ModalFooter';
 import GoogleButton from 'components/atoms/Inputs/GoogleButton';
-import { loginByEmail, singInByGoogle } from 'db/auth';
+import { loginByEmail, singInByGoogle } from 'db/API/auth';
 import { createNotification } from 'common/notifications';
 import { Redirect } from 'react-router';
 import { createUserWithEmailAndPassword, getAuth } from '@firebase/auth';
+import { addDefaultSettingsIfNotExistsAPI } from 'db/API/settings';
 
 interface SignFormProps {
   onClose: () => void;
@@ -28,10 +29,14 @@ const SignForm: FC<SignFormProps> = ({ onClose }) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
-        if (user.uid) loginByEmail(email, password);
+        if (user.uid) {
+          loginByEmail(email, password);
+          addDefaultSettingsIfNotExistsAPI(user.uid);
+        }
       })
       .catch(error => {
-        if (error.code === 'auth/weak-password') createNotification(t('api.weakPassword'), 'error');
+        if (error.code === 'auth/weak-password')
+          createNotification(t('api.weakPassword'), 'error');
 
         if (error.code === 'auth/email-already-in-use')
           createNotification(t('api.existsMail'), 'error');
@@ -42,7 +47,10 @@ const SignForm: FC<SignFormProps> = ({ onClose }) => {
 
   const googleSubmit = async () => {
     const result = await singInByGoogle();
-    if (result.token) setRedirect(true);
+    if (result.token && result.user) {
+      setRedirect(true);
+      addDefaultSettingsIfNotExistsAPI(result.user.uid);
+    }
   };
 
   return (
@@ -53,7 +61,10 @@ const SignForm: FC<SignFormProps> = ({ onClose }) => {
         <FormProvider {...methods}>
           <GoogleButton onClick={googleSubmit} />
 
-          <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '50px 50px 20px' }}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            style={{ padding: '50px 50px 20px' }}
+          >
             <Stack spacing={6}>
               <InputField name='email' required />
               <InputField name='password' required type='password' />

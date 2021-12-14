@@ -9,14 +9,14 @@ import { theme } from 'styles/theme';
 import { routes } from 'routes';
 import HomePage from 'pages/HomePage';
 import UserPage from 'pages/UserPage';
-import { getCurrentUser } from 'db/auth';
+// import { getUserSettingsAPI } from 'db/API/settings';
 
 function App() {
   return (
     <ChakraProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <button onClick={getCurrentUser}>get user</button>
+        {/* <button onClick={getUserSettingsAPI}>get user</button> */}
         <Router>
           <Switch>
             <Route exact path={routes.home} component={HomePage} />
