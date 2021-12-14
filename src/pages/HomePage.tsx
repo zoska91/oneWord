@@ -7,6 +7,7 @@ import Background from 'components/Background';
 import Card from 'components/Card';
 import Button from 'components/atoms/Button';
 import ModalForm from 'components/ModalForm/ModalForm';
+import { device } from 'styles/devices';
 
 interface HomePageProps {}
 
@@ -21,6 +22,13 @@ const WelcomeCard = styled.div`
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
+
+  @media ${device.tablet} {
+    width: 80vw;
+    min-width: 280px;
+    height: 55vh;
+    padding: 20px;
+  }
 `;
 
 const HomePage: FC<HomePageProps> = () => {

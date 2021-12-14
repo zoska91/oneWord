@@ -18,19 +18,29 @@ const themeInput = {
   focusBorderColor: '#2e2757',
 };
 
-const SelectField: FC<SelectFieldProps> = ({ name, required, desc, options, label }) => {
+const SelectField: FC<SelectFieldProps> = ({
+  name,
+  required,
+  desc,
+  options,
+  label,
+}) => {
   const {
     register,
     formState: { errors },
+    getValues,
   } = useFormContext();
 
   const { t } = useTranslation();
+  const values = getValues();
+  console.log(values[name]);
 
   return (
     <FormControl isInvalid={Boolean(errors[name])}>
       {label ? label : <FormLabel>{t(`form.${name}Label`)}</FormLabel>}
       {desc && <Desc>{t(`form.${name}Desc`)}</Desc>}
       <Select
+        defaultValue='English'
         placeholder={label ? t('form.select') : t(`form.${name}Placeholder`)}
         {...themeInput}
         {...register(name, {
@@ -38,13 +48,15 @@ const SelectField: FC<SelectFieldProps> = ({ name, required, desc, options, labe
           required: required ? t('form.require') : null,
         })}
       >
-        {options.map(el => (
-          <option key={el.value} value={el.value}>
+        {options.map((el, i) => (
+          <option key={`${el.value}-${i}`} value={el.value}>
             {el.label}
           </option>
         ))}
       </Select>
-      <FormErrorMessage>{errors?.[name] && errors[name].message}</FormErrorMessage>
+      <FormErrorMessage>
+        {errors?.[name] && errors[name].message}
+      </FormErrorMessage>
     </FormControl>
   );
 };

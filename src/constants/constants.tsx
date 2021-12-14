@@ -11,3 +11,16 @@ export const buttonTypes = {
   SHOW_ANSWER: 'showAnswer',
   GOOD_TO_KNOW: 'goodToKnow',
 };
+
+export const defaultSettingsData = {
+  breakDay: '7',
+  isBreak: true,
+  isSummary: true,
+  notifications: [
+    { time: '12:42', type: '1' },
+    { time: '14:42', type: '2' },
+    { time: '12:42', type: '3' },
+  ],
+  selectLanguage: 'en',
+  summaryDay: '1',
+};
