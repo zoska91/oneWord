@@ -22,7 +22,7 @@ import AsideButton from 'components/atoms/AsideButton';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getTodayWordAPI } from 'db/API/words';
 import { device } from 'styles/devices';
-import Spiner from 'components/atoms/Spiner';
+import BottomMenu from 'components/BottomMenu/BottomMenu';
 
 interface HomePageProps {}
 
@@ -50,6 +50,10 @@ const BasicWord = styled.p`
   text-shadow: 2px 2px 0px #fff;
 
   ${flexCenter}
+
+  @media ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `;
 
 const TransWord = styled.div`
@@ -59,6 +63,10 @@ const TransWord = styled.div`
   flex: 1 0 auto;
 
   ${flexCenter}
+
+  @media ${device.tablet} {
+    min-height: 30%;
+  }
 `;
 
 const UserPage: FC<HomePageProps> = () => {
@@ -92,7 +100,7 @@ const UserPage: FC<HomePageProps> = () => {
     if (result === 'success') setRedirect(true);
   };
 
-  if (loading) return <Spiner />;
+  if (loading) return <div>loading...</div>;
 
   return (
     <>
@@ -102,7 +110,7 @@ const UserPage: FC<HomePageProps> = () => {
         <>
           <Background />
           <Title>{t('todaysWord')}</Title>
-          <Card>
+          <Card upper>
             {!closeLearn ? (
               <WordCard>
                 <BasicWord>{todaysWord.basicWord}</BasicWord>
@@ -127,6 +135,10 @@ const UserPage: FC<HomePageProps> = () => {
             top={80}
             onClick={handleLogout}
           />
+
+          <BottomMenu>
+            <div style={{ height: '80vh' }}></div>
+          </BottomMenu>
         </>
       )}
     </>

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import { device } from 'styles/devices';
 
 interface AsideButtonProps {
   label: string;
@@ -35,6 +36,10 @@ const Wrapper = styled.div<WrapperStyled>`
   &:hover {
     padding: ${({ small }) => (small ? '20px 15px' : '30px')};
     box-shadow: -12px 5px 15px 3px #868686b9;
+  }
+
+  @media ${device.tablet} {
+    display: none;
   }
 `;
 

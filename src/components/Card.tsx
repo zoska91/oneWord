@@ -1,9 +1,12 @@
-import { FC } from 'react';
 import styled from 'styled-components';
+import { FC } from 'react';
 import { device } from 'styles/devices';
 import { flexCenter } from 'styles/mixins';
 
-const Bg = styled.div`
+interface styleProps {
+  upper?: boolean;
+}
+const Bg = styled.div<styleProps>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -22,16 +25,22 @@ const Bg = styled.div`
   cursor: pointer;
 
   @media ${device.desktop} {
-    top: 60%;
+    top: ${({ upper }) => (upper ? '52%' : '55%')};
     width: 80vw;
     min-width: 280px;
     height: 55vh;
   }
+
+  @media ${device.tablet} {
+    top: ${({ upper }) => (upper ? '52%' : '55%')};
+    height:  ${({ upper }) => (upper ? '80vh' : '60vh')};;
+
+  }}
 `;
 
-const TextWrapper = styled.div`
+const TextWrapper = styled.div<styleProps>`
   position: fixed;
-  top: 55%;
+  top: ${({ upper }) => (upper ? '45%' : '55%')};
   left: 50%;
   transform: translate(-50%, -50%);
   height: 50vh;
@@ -44,7 +53,6 @@ const TextWrapper = styled.div`
   ${flexCenter}
 
   @media ${device.tablet} {
-    top: 60%;
     width: 80vw;
     min-width: 280px;
     height: 55vh;
@@ -53,13 +61,14 @@ const TextWrapper = styled.div`
 
 interface CardProps {
   children: JSX.Element | string;
+  upper?: boolean;
 }
 
-const Card: FC<CardProps> = ({ children }) => {
+const Card: FC<CardProps> = ({ children, upper }) => {
   return (
     <>
-      <Bg />
-      <TextWrapper>{children}</TextWrapper>
+      <Bg upper={upper} />
+      <TextWrapper upper={upper}>{children}</TextWrapper>
     </>
   );
 };

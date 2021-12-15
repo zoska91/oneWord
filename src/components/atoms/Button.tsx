@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled, { css } from 'styled-components';
+import { device } from 'styles/devices';
 
 interface ButtonProps {
   children: JSX.Element | string;
@@ -39,6 +40,12 @@ const Wrapper = styled.button<styleWrapperProps>`
     box-shadow: 7px 5px 15px -1px ${({ theme }) => theme.colorPrimary};
   }
 
+  @media ${device.desktop} {
+    padding: 10px 20px;
+    border-radius: 10px;
+    opacity: 0.9;
+  }
+
   ${({ disabled }) =>
     disabled &&
     css`
@@ -53,7 +60,14 @@ const Wrapper = styled.button<styleWrapperProps>`
     `}
 `;
 
-const Button: FC<ButtonProps> = ({ children, onClick, dark, disabled, small, type = 'button' }) => {
+const Button: FC<ButtonProps> = ({
+  children,
+  onClick,
+  dark,
+  disabled,
+  small,
+  type = 'button',
+}) => {
   return (
     <Wrapper
       onClick={onClick}

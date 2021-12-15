@@ -3,7 +3,6 @@ import { getUserSettingsAPI } from './settings';
 import {
   collection,
   doc,
-  getDoc,
   query,
   where,
   getDocs,
@@ -16,28 +15,28 @@ import {
 import { db } from 'db/config';
 import { getCurrentUser } from './auth';
 import { IInputsAddWord } from 'components/ModalForm/formTypes';
-import { ITodayWord } from 'types/api';
 
 export const getTodayWordAPI = async () => {
   const { userId } = getCurrentUser();
+  if (userId) {
+    const q = query(
+      collection(db, 'words'),
+      where('userId', '==', userId),
+      where('status', '==', 1)
+    );
 
-  const q = query(
-    collection(db, 'words'),
-    where('userId', '==', userId),
-    where('status', '==', 1)
-  );
+    const querySnapshot = await getDocs(q);
 
-  const querySnapshot = await getDocs(q);
-
-  if (querySnapshot.size === 0) {
-    const word = await getRandomWordAPI();
-    return word;
-  } else {
-    let word = {};
-    querySnapshot.forEach(doc => {
-      word = { ...doc.data(), wordId: doc.id };
-    });
-    return word;
+    if (querySnapshot.size === 0) {
+      const word = await getRandomWordAPI();
+      return word;
+    } else {
+      let word = {};
+      querySnapshot.forEach(doc => {
+        word = { ...doc.data(), wordId: doc.id };
+      });
+      return word;
+    }
   }
 };
 

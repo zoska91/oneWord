@@ -50,6 +50,7 @@ const HomePage: FC<HomePageProps> = () => {
           <Button dark>{t('welcome5')}</Button>
         </WelcomeCard>
       </Card>
+
       <ModalForm type='login' top={20} />
       <ModalForm type='signin' top={38} />
       <BottomMenu>

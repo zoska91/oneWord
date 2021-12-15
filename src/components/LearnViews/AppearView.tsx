@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import Button from 'components/atoms/Button';
 import { useGlobalState } from 'state';
+import { device } from 'styles/devices';
 
 interface AppearViewProps {}
 
@@ -14,6 +15,10 @@ const Word = styled.p`
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
+
+  @media ${device.mobileL} {
+    font-size: 1.5rem;
+  }
 `;
 
 const AppearView: FC<AppearViewProps> = () => {
