@@ -21,6 +21,8 @@ import { logOut } from 'db/API/auth';
 import AsideButton from 'components/atoms/AsideButton';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getTodayWordAPI } from 'db/API/words';
+import { device } from 'styles/devices';
+import Spiner from 'components/atoms/Spiner';
 
 interface HomePageProps {}
 
@@ -28,6 +30,13 @@ const WordCard = styled.div`
   height: 100%;
   width: 100%;
   padding: 0 30px;
+
+  @media ${device.tablet} {
+    width: 80vw;
+    min-width: 280px;
+    height: 55vh;
+    padding: 20px;
+  }
 `;
 
 const BasicWord = styled.p`
@@ -83,7 +92,7 @@ const UserPage: FC<HomePageProps> = () => {
     if (result === 'success') setRedirect(true);
   };
 
-  if (loading) return <div>loading...</div>;
+  if (loading) return <Spiner />;
 
   return (
     <>

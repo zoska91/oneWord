@@ -23,7 +23,6 @@ const CheckboxField: FC<CheckboxFieldProps> = ({ name, required, desc }) => {
     <FormControl isInvalid={Boolean(errors[name])}>
       <FormControl isInvalid={Boolean(errors.summary)}>
         <Checkbox
-          defaultIsChecked
           {...register(name, {
             // @ts-ignore
             required: required ? t('form.require') : null,

@@ -8,6 +8,7 @@ import Card from 'components/Card';
 import Button from 'components/atoms/Button';
 import ModalForm from 'components/ModalForm/ModalForm';
 import { device } from 'styles/devices';
+import BottomMenu from 'components/BottomMenu/BottomMenu';
 
 interface HomePageProps {}
 
@@ -51,6 +52,12 @@ const HomePage: FC<HomePageProps> = () => {
       </Card>
       <ModalForm type='login' top={20} />
       <ModalForm type='signin' top={38} />
+      <BottomMenu>
+        <div style={{ height: '80vh' }}>
+          <ModalForm type='login' top={20} />
+          <ModalForm type='signin' top={38} />
+        </div>
+      </BottomMenu>
     </>
   );
 };

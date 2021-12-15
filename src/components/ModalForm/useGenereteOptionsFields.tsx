@@ -26,23 +26,23 @@ const useGenerateOptionsFields = () => {
   ];
 
   const learnTypesOptions = [
-    { value: '1', label: 'Show word' },
-    { value: '2', label: 'Quiz' },
-    { value: '3', label: 'Gues word' },
-    { value: '3', label: 'Appear word ' },
+    { value: 1, label: 'Show word' },
+    { value: 2, label: 'Quiz' },
+    { value: 3, label: 'Gues word' },
+    { value: 3, label: 'Appear word ' },
   ];
 
   useEffect(() => {
     setAddLangOptions([
-      { label: 'English', value: 'en' },
-      { label: 'Japan', value: 'jp' },
-      { label: 'Polish', value: 'pl' },
+      { value: 'en', label: 'English' },
+      { value: 'jp', label: 'Japan' },
+      { value: 'pl', label: 'Polish' },
     ]);
 
     setSelectLanguageOptions([
-      { label: 'English', value: 'en' },
-      { label: 'Japan', value: 'jp' },
-      { label: 'Polish', value: 'pl' },
+      { value: 'en', label: 'English' },
+      { value: 'jp', label: 'Japan' },
+      { value: 'pl', label: 'Polish' },
     ]);
   }, []);
 

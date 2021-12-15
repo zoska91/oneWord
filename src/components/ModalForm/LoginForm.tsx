@@ -22,6 +22,7 @@ const LoginForm: FC<LoginFormProps> = ({ onClose }) => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const methods = useForm<IAuth>();
+
   const { handleSubmit } = methods;
 
   const onSubmit: SubmitHandler<IAuth> = async ({ email, password }) => {

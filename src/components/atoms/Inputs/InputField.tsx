@@ -11,6 +11,7 @@ interface InputFieldProps {
   desc?: boolean;
   type?: string;
   noLabel?: boolean;
+  defaultValue?: string;
 }
 
 const themeInput = {
@@ -18,8 +19,16 @@ const themeInput = {
   focusBorderColor: '#2e2757',
 };
 
-const InputField: FC<InputFieldProps> = ({ name, required, desc, type = 'text', noLabel }) => {
+const InputField: FC<InputFieldProps> = ({
+  name,
+  required,
+  desc,
+  type = 'text',
+  noLabel,
+  defaultValue,
+}) => {
   const {
+    getValues,
     register,
     formState: { errors },
   } = useFormContext();
@@ -31,6 +40,7 @@ const InputField: FC<InputFieldProps> = ({ name, required, desc, type = 'text', 
       {!noLabel && <FormLabel>{t(`form.${name}Label`)}</FormLabel>}
       {desc && <Desc>{t(`form.${name}Desc`)}</Desc>}
       <Input
+        defaultValue={defaultValue}
         placeholder={t(`form.${name}Placeholder`)}
         {...themeInput}
         {...register(name, {
@@ -39,7 +49,9 @@ const InputField: FC<InputFieldProps> = ({ name, required, desc, type = 'text', 
         })}
         type={type}
       />
-      <FormErrorMessage>{errors?.[name] && errors[name].message}</FormErrorMessage>
+      <FormErrorMessage>
+        {errors?.[name] && errors[name].message}
+      </FormErrorMessage>
     </FormControl>
   );
 };
