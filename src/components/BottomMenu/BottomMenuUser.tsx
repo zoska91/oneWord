@@ -8,20 +8,15 @@ import { flexCenter } from 'styles/mixins';
 import { logOut } from 'db/API/auth';
 import { Redirect } from 'react-router';
 import PreferencesFormBottom from 'components/ModalForm/PreferencesFormBottom';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
-import LogoutIcon from '@mui/icons-material/Logout';
-import ViewListIcon from '@mui/icons-material/ViewList';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import EditIcon from '@mui/icons-material/Edit';
-
-import Box from '@mui/material/Box';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
+import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
+import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import Button from '@material-ui/core/Button';
+import Backdrop from '@material-ui/core/Backdrop';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 interface BottomMenuUserProps {}
 
@@ -93,29 +88,26 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
     if (result === 'success') setRedirect(true);
   };
 
-  // const actions = [
-  //   {
-  //     icon: <AddBoxIcon />,
-  //     name: 'add word',
-  //     onClick: () => {
-  //       setIsAddWord(true);
-  //     },
-  //   },
-  //   {
-  //     icon: <ViewListIcon />,
-  //     name: 'words list',
-  //     onClick: () => {
-  //       console.log('tu będzie lista');
-  //     },
-  //   },
-  //   { icon: <LogoutIcon />, name: 'logout', onClick: () => handleLogout() },
-  // ];
-
   const actions = [
-    { icon: <FileCopyIcon />, name: 'Copy' },
-    { icon: <SaveIcon />, name: 'Save' },
-    { icon: <PrintIcon />, name: 'Print' },
-    { icon: <ShareIcon />, name: 'Share' },
+    {
+      icon: <PlaylistAddOutlinedIcon />,
+      name: 'add word',
+      onClick: () => {
+        setIsAddWord(true);
+      },
+    },
+    {
+      icon: <FormatListBulletedOutlinedIcon />,
+      name: 'words list',
+      onClick: () => {
+        console.log('tu będzie lista');
+      },
+    },
+    {
+      icon: <ExitToAppOutlinedIcon />,
+      name: 'logout',
+      onClick: () => handleLogout(),
+    },
   ];
 
   return (
@@ -132,31 +124,10 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
                 <Header fontSize='3xl'>
                   {t(`form.preferencesTitle`)}
 
-                  <Box
-                    sx={{
-                      height: 320,
-                      transform: 'translateZ(0px)',
-                      flexGrow: 1,
-                    }}
-                  >
-                    <SpeedDial
-                      ariaLabel='SpeedDial openIcon example'
-                      sx={{ position: 'absolute', bottom: 16, right: 16 }}
-                      icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-                    >
-                      {actions.map(action => (
-                        <SpeedDialAction
-                          key={action.name}
-                          icon={action.icon}
-                          tooltipTitle={action.name}
-                        />
-                      ))}
-                    </SpeedDial>
-                  </Box>
-                  {/* <SpeedDial
+                  <SpeedDial
+                    direction='down'
                     ariaLabel='Menu'
-                    sx={{ position: 'fixed', bottom: 16, right: 16 }}
-                    icon={<SpeedDialIcon openIcon={<EditIcon />} />}
+                    icon={<MoreVertIcon />}
                     onClose={() => setOpenMenu(false)}
                     onOpen={() => setOpenMenu(true)}
                     open={openMenu}
@@ -172,7 +143,7 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
                         }}
                       />
                     ))}
-                  </SpeedDial> */}
+                  </SpeedDial>
                 </Header>
                 <PreferencesFormBottom />
                 <Grid templateColumns='repeat(3, 1fr)' gap={1} p={2}></Grid>

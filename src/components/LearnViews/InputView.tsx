@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { useGlobalState } from 'state';
 import { device } from 'styles/devices';
 
