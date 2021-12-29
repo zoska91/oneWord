@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
-import { fly } from '../styles/animation';
+import { fly } from '../../styles/animation';
 
 interface BubbleProps {
   colors: string;

@@ -1,124 +1,36 @@
-import AddWordForm from 'components/ModalForm/AddWordForm';
-import { Grid, Text } from '@chakra-ui/react';
-import { FC, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import styled, { css } from 'styled-components';
-import { SettingsIcon } from '@chakra-ui/icons';
-import { flexCenter } from 'styles/mixins';
-import { logOut } from 'db/API/auth';
+import { FC } from 'react';
 import { Redirect } from 'react-router';
-import PreferencesFormBottom from 'components/ModalForm/PreferencesFormBottom';
-import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
-import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import { Grid } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
+import { SettingsIcon } from '@chakra-ui/icons';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import PreferencesFormBottom from 'components/ModalForm/PreferencesFormBottom';
+import AddWordForm from 'components/ModalForm/AddWordForm';
+import * as S from './BottomMenu.css';
+import useBottomMenuUser from './useBottomMenuUser';
+
 interface BottomMenuUserProps {}
-
-interface StylesProps {
-  isAddWord?: boolean;
-}
-
-const Wrapper = styled.div`
-  padding-top: 40px;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-`;
-
-const Header = styled(Text)<StylesProps>`
-  position: relative;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colorPrimary};
-  font-family: 'Josefin Sans', sans-serif;
-  text-align: center;
-  transition: 0.5s;
-
-  .MuiSpeedDialAction-staticTooltipLabel {
-    font-size: 0.75rem;
-    color: ${({ theme }) => theme.colorPrimary};
-    display: flex;
-    width: 120px;
-    flex-direction: row-reverse;
-  }
-
-  .MuiFab-root {
-    width: 40px;
-  }
-`;
-
-const PreferencesContainer = styled.div<StylesProps>`
-  padding-top: ${({ isAddWord }) => (isAddWord ? 0 : '20px')};
-  position: absolute;
-  background-color: ${({ theme, isAddWord }) =>
-    isAddWord ? theme.colorSecondary : theme.colorLight};
-  width: 60px;
-  height: 60px;
-  bottom: 0;
-  right: 0;
-  border-radius: 30px 5px 0 30px;
-  transition: 0.4s;
-
-  ${flexCenter}
-
-  ${({ isAddWord }) =>
-    !isAddWord &&
-    css`
-      display: block;
-      width: 100%;
-      height: 100%;
-      bottom: -20px;
-      border-radius: 20px 20px 0 0;
-    `}
-`;
 
 const BottomMenuUser: FC<BottomMenuUserProps> = () => {
   const { t } = useTranslation();
-  const [redirect, setRedirect] = useState<boolean>(false);
-  const [isAddWord, setIsAddWord] = useState<boolean>(true);
-  const [openMenu, setOpenMenu] = useState<boolean>(false);
-
-  const handleLogout = async () => {
-    const result = await logOut();
-    if (result === 'success') setRedirect(true);
-  };
-
-  const actions = [
-    {
-      icon: <PlaylistAddOutlinedIcon />,
-      name: 'add word',
-      onClick: () => {
-        setIsAddWord(true);
-      },
-    },
-    {
-      icon: <FormatListBulletedOutlinedIcon />,
-      name: 'words list',
-      onClick: () => {
-        console.log('tu będzie lista');
-      },
-    },
-    {
-      icon: <ExitToAppOutlinedIcon />,
-      name: 'logout',
-      onClick: () => handleLogout(),
-    },
-  ];
+  const { redirect, isAddWord, openMenu, actions, setOpenMenu, setIsAddWord } =
+    useBottomMenuUser();
 
   return (
     <>
       {redirect ? (
         <Redirect to='/' />
       ) : (
-        <Wrapper>
-          <Header fontSize='3xl'>{t(`form.addWordTitle`)}</Header>
+        <S.WrapperBottomMenuUser>
+          <S.Header fontSize='3xl'>{t(`form.addWordTitle`)}</S.Header>
           <AddWordForm />
-          <PreferencesContainer isAddWord={isAddWord}>
+          <S.PreferencesContainer isAddWord={isAddWord}>
             {!isAddWord && (
               <>
-                <Header fontSize='3xl' paddingRight={10}>
+                <S.Header fontSize='3xl' paddingRight={10}>
                   {t(`form.preferencesTitle`)}
 
                   <SpeedDial
@@ -148,7 +60,7 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
                       />
                     ))}
                   </SpeedDial>
-                </Header>
+                </S.Header>
                 <PreferencesFormBottom openMenu={openMenu} />
                 <Grid templateColumns='repeat(3, 1fr)' gap={1} p={2}></Grid>
               </>
@@ -159,8 +71,8 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
                 <SettingsIcon w={6} h={6} color='#ffffffae' />
               </button>
             )}
-          </PreferencesContainer>
-        </Wrapper>
+          </S.PreferencesContainer>
+        </S.WrapperBottomMenuUser>
       )}
     </>
   );

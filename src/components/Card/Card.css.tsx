@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { FC } from 'react';
 import { device } from 'styles/devices';
 import { flexCenter } from 'styles/mixins';
 
 interface styleProps {
   upper?: boolean;
 }
-const Bg = styled.div<styleProps>`
+
+export const Bg = styled.div<styleProps>`
   position: fixed;
   top: 50%;
   left: 50%;
@@ -37,9 +37,9 @@ const Bg = styled.div<styleProps>`
   }
 `;
 
-const TextWrapper = styled.div<styleProps>`
+export const TextWrapper = styled.div<styleProps>`
   position: fixed;
-  top: ${({ upper }) => (upper ? '45%' : '55%')};
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 50vh;
@@ -52,24 +52,9 @@ const TextWrapper = styled.div<styleProps>`
   ${flexCenter}
 
   @media ${device.tablet} {
+    top: ${({ upper }) => (upper ? '45%' : '55%')};
     width: 80vw;
     min-width: 280px;
     height: 55vh;
   }
 `;
-
-interface CardProps {
-  children: JSX.Element | string;
-  upper?: boolean;
-}
-
-const Card: FC<CardProps> = ({ children, upper }) => {
-  return (
-    <>
-      <Bg upper={upper} />
-      <TextWrapper upper={upper}>{children}</TextWrapper>
-    </>
-  );
-};
-
-export default Card;

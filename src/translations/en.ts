@@ -90,4 +90,9 @@ export const en = {
     existsMail: 'This mail already exists',
     userNotFound: 'User not found',
   },
+  actionsBottomMenu: {
+    addWord: 'add word',
+    wordsList: 'words list',
+    logout: 'logout',
+  },
 };

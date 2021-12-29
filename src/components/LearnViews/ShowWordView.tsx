@@ -1,22 +1,14 @@
-import styled from 'styled-components';
 import { FC } from 'react';
 import { useGlobalState } from 'state';
 
-interface ShowWordViewProps {}
+import * as S from './Views.css';
 
-const Word = styled.p`
-  color: ${({ theme }) => theme.colorPrimary};
-  font-weight: bold;
-  font-size: 2rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  text-align: center;
-`;
+interface ShowWordViewProps {}
 
 const ShowWordView: FC<ShowWordViewProps> = () => {
   const [todaysWord] = useGlobalState('todaysWord');
 
-  return <Word>{todaysWord.transWord}</Word>;
+  return <S.Word>{todaysWord.transWord}</S.Word>;
 };
 
 export default ShowWordView;

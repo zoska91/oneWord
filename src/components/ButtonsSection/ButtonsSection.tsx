@@ -1,38 +1,14 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 
 import { learnTypes } from 'constants/constants';
-import { flexCenter } from 'styles/mixins';
 import { useGlobalState } from 'state';
 import { useButtonsActions } from './useButtonActions';
 import { useTranslation } from 'react-i18next';
-import { device } from 'styles/devices';
 import Button from 'components/atoms/Button';
 
+import { Wrapper } from './ButtonSection.css';
+
 interface ButtonSectionProps {}
-
-const Wrapper = styled.div`
-  position: fixed;
-  bottom: 10%;
-  left: 0;
-  right: 0;
-  z-index: 10;
-
-  ${flexCenter}
-
-  @media ${device.tablet} {
-    flex-direction: column;
-    bottom: 13%;
-
-    button {
-      margin: 10px 0;
-    }
-
-    button:nth-child(1) {
-      order: 1;
-    }
-  }
-`;
 
 const ButtonsSection: FC<ButtonSectionProps> = () => {
   const { t } = useTranslation();

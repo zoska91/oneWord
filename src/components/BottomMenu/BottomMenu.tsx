@@ -1,38 +1,13 @@
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 // @ts-ignore
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 
-import { device } from 'styles/devices';
-
+import * as S from './BottomMenu.css';
 interface HomePageProps {}
-
-const Wrapper = styled.div`
-  display: none;
-
-  .react-swipeable-view-container {
-    border-radius: 20px;
-  }
-
-  @media ${device.tablet} {
-    display: block;
-  }
-`;
-
-const Line = styled.div`
-  width: 50%;
-  margin: 0 auto;
-  height: 5px;
-  background-color: ${({ theme }) => theme.colorPrimary};
-  border-radius: 20px;
-  margin-top: 10px;
-  backdrop-filter: blur(6px);
-`;
 
 const BottomMenu: FC<HomePageProps> = ({ children }) => {
   return (
-    <Wrapper>
+    <S.Wrapper>
       <SwipeableBottomSheet
         overflowHeight={25}
         style={{
@@ -51,10 +26,10 @@ const BottomMenu: FC<HomePageProps> = ({ children }) => {
           backgroundColor: 'rgba(218, 218, 218, 0.9)',
         }}
       >
-        <Line />
+        <S.Line />
         {children}
       </SwipeableBottomSheet>
-    </Wrapper>
+    </S.Wrapper>
   );
 };
 
