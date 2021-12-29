@@ -9,17 +9,23 @@ interface ButtonProps {
   disabled?: boolean;
   small?: boolean;
   type?: 'button' | 'reset' | 'submit' | undefined;
+  secondaryColor?: boolean;
 }
 
 interface styleWrapperProps {
   dark: Boolean;
   disabled?: boolean;
   small?: boolean;
+  secondaryColor?: boolean;
 }
 
 const Wrapper = styled.button<styleWrapperProps>`
-  background-color: ${({ theme, dark }) =>
-    dark ? theme.colorPrimary : 'rgba(255, 255, 255, 0.5)'};
+  background-color: ${({ theme, dark, secondaryColor }) =>
+    dark
+      ? theme.colorPrimary
+      : secondaryColor
+      ? theme.colorSecondary
+      : 'rgba(255, 255, 255, 0.5)'};
   border: none;
   backdrop-filter: blur(6px);
   cursor: pointer;
@@ -29,7 +35,8 @@ const Wrapper = styled.button<styleWrapperProps>`
   transition: 0.5s;
   font-size: 1rem;
   margin: 0 20px;
-  color: ${({ theme, dark }) => (dark ? 'white' : theme.colorPrimary)};
+  color: ${({ theme, dark, secondaryColor }) =>
+    dark || secondaryColor ? 'white' : theme.colorPrimary};
   border: 2px solid transparent;
   min-width: ${({ small }) => (small ? '130px' : '200px')};
   box-shadow: 7px 5px 17px -1px rgba(0, 0, 0, 0.38);
@@ -67,6 +74,7 @@ const Button: FC<ButtonProps> = ({
   disabled,
   small,
   type = 'button',
+  secondaryColor,
 }) => {
   return (
     <Wrapper
@@ -75,6 +83,7 @@ const Button: FC<ButtonProps> = ({
       disabled={disabled}
       small={small}
       type={type}
+      secondaryColor={secondaryColor}
     >
       {children}
     </Wrapper>

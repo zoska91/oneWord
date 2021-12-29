@@ -39,7 +39,7 @@ const SelectField: FC<SelectFieldProps> = ({
       {label ? label : <FormLabel>{t(`form.${name}Label`)}</FormLabel>}
       {desc && <Desc>{t(`form.${name}Desc`)}</Desc>}
       <Select
-        defaultValue={values[name]?.value}
+        defaultValue={values[name]}
         placeholder={label ? t('form.select') : t(`form.${name}Placeholder`)}
         {...themeInput}
         {...register(name, {

@@ -21,35 +21,34 @@ const Wrapper = styled.div`
 `;
 
 const Line = styled.div`
-  width: 80%;
+  width: 50%;
   margin: 0 auto;
   height: 5px;
-  background-color: #9a9ae1;
+  background-color: ${({ theme }) => theme.colorPrimary};
   border-radius: 20px;
   margin-top: 10px;
   backdrop-filter: blur(6px);
 `;
 
 const BottomMenu: FC<HomePageProps> = ({ children }) => {
-  const { t } = useTranslation();
-
   return (
     <Wrapper>
       <SwipeableBottomSheet
         overflowHeight={25}
         style={{
           zIndex: 11,
-          width: '80vw',
-          minWidth: '280px',
+          width: '90vw',
+          minWidth: '320px',
           margin: '0 auto',
           backgroundColor: 'transparent',
         }}
         overlayStyle={{
-          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
         }}
         bodyStyle={{
-          borderRadius: '20px',
-          backgroundColor: 'rgba(255, 255, 255, 0.6)',
+          borderRadius: '20px 20px 0 0 ',
+          overflow: 'hidden',
+          backgroundColor: 'rgba(218, 218, 218, 0.9)',
         }}
       >
         <Line />

@@ -9,6 +9,7 @@ import Button from 'components/atoms/Button';
 import ModalForm from 'components/ModalForm/ModalForm';
 import { device } from 'styles/devices';
 import BottomMenu from 'components/BottomMenu/BottomMenu';
+import BottomMenuAuth from 'components/BottomMenu/BottomMenuAuth';
 
 interface HomePageProps {}
 
@@ -29,6 +30,14 @@ const WelcomeCard = styled.div`
     min-width: 280px;
     height: 55vh;
     padding: 20px;
+  }
+`;
+
+const MenuBottomWrapper = styled.div`
+  height: 80vh;
+
+  @media (max-height: 650px) {
+    height: 90vh;
   }
 `;
 
@@ -54,10 +63,9 @@ const HomePage: FC<HomePageProps> = () => {
       <ModalForm type='login' top={20} />
       <ModalForm type='signin' top={38} />
       <BottomMenu>
-        <div style={{ height: '80vh' }}>
-          <ModalForm type='login' top={20} />
-          <ModalForm type='signin' top={38} />
-        </div>
+        <MenuBottomWrapper>
+          <BottomMenuAuth />
+        </MenuBottomWrapper>
       </BottomMenu>
     </>
   );

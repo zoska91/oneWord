@@ -23,6 +23,7 @@ import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getTodayWordAPI } from 'db/API/words';
 import { device } from 'styles/devices';
 import BottomMenu from 'components/BottomMenu/BottomMenu';
+import BottomMenuUser from 'components/BottomMenu/BottomMenuUser';
 
 interface HomePageProps {}
 
@@ -66,6 +67,14 @@ const TransWord = styled.div`
 
   @media ${device.tablet} {
     min-height: 30%;
+  }
+`;
+
+export const MenuBottomWrapper = styled.div`
+  height: 94vh;
+
+  @media (max-height: 650px) {
+    height: 98vh;
   }
 `;
 
@@ -137,7 +146,9 @@ const UserPage: FC<HomePageProps> = () => {
           />
 
           <BottomMenu>
-            <div style={{ height: '80vh' }}></div>
+            <MenuBottomWrapper>
+              <BottomMenuUser />
+            </MenuBottomWrapper>
           </BottomMenu>
         </>
       )}

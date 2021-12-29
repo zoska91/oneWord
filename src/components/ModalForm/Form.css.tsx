@@ -52,4 +52,8 @@ export const FormLabel = styled.label<LabelType>`
   display: felx;
   align-items: flex-start;
   justify-content: space-between;
+
+  @media (max-height: 650px) {
+    font-size: ${({ big }) => big && '1.1rem'};
+  }
 `;

@@ -14,8 +14,8 @@ import {
 import AsideButton from '../atoms/AsideButton';
 import AddWordForm from './AddWordForm';
 import PreferencesForm from './PreferencesForm';
-import LoginForm from './LoginForm';
-import SignForm from './SignForm';
+import LoginForm from '../auth/LoginForm';
+import SignForm from '../auth/SignForm';
 
 interface ModalFormProps {
   type: string;

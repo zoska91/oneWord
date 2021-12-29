@@ -1,59 +1,36 @@
-import { FC, useEffect, useState } from 'react';
-import {
-  useForm,
-  SubmitHandler,
-  useFieldArray,
-  FormProvider,
-} from 'react-hook-form';
+import { FC } from 'react';
+import { FormProvider } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Stack, Grid, Box } from '@chakra-ui/react';
 import { DeleteIcon, AddIcon } from '@chakra-ui/icons';
 
 import * as S from './Form.css';
-import { IInputsPreferences } from './formTypes';
 import useGenerateOptionsFields from './useGenereteOptionsFields';
 import SelectField from 'components/atoms/Inputs/SelectInput';
 import CheckboxField from 'components/atoms/Inputs/CheckboxField';
 import InputField from 'components/atoms/Inputs/InputField';
 import ModalFooter from './ModalFooter';
-import { getUserSettingsAPI } from 'db/API/settings';
 import Spiner from 'components/atoms/Spiner';
-import { ISettings } from 'types/api';
+import usePreferencesForm from './PreferencesForm.hooks';
 
 interface PreferencesFormProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
-  const [defaultValues, setDefaultValues] = useState<ISettings | null>(null);
-
   const { selectLanguageOptions, daysOptions, learnTypesOptions } =
     useGenerateOptionsFields();
-
-  const methods = useForm();
-  const { control, handleSubmit, watch, reset } = methods;
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'notifications',
-  });
-  const watchSummary = watch('isSummary');
-  const watchBreak = watch('isBreak');
-
-  const getUserSettings = async () => {
-    const resp = await getUserSettingsAPI();
-    if (resp) setDefaultValues(resp.data);
-  };
-
-  useEffect(() => {
-    getUserSettings();
-  }, []);
-
-  useEffect(() => {
-    if (defaultValues) reset(defaultValues);
-  }, [defaultValues]);
-
-  const onSubmit: SubmitHandler<IInputsPreferences> = data => console.log(data);
+  const {
+    onSubmit,
+    watchSummary,
+    watchBreak,
+    handleSubmit,
+    fields,
+    append,
+    methods,
+    remove,
+  } = usePreferencesForm();
 
   return (
     <>
@@ -137,7 +114,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
                 </Stack>
               </Box>
             </Grid>
-            <ModalFooter onClose={onClose} />
+            {onClose && <ModalFooter onClose={onClose} />}
           </form>
         </FormProvider>
       )}
