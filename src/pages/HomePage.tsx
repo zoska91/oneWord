@@ -8,6 +8,8 @@ import Card from 'components/Card';
 import Button from 'components/atoms/Button';
 import ModalForm from 'components/ModalForm/ModalForm';
 import { device } from 'styles/devices';
+import BottomMenu from 'components/BottomMenu/BottomMenu';
+import BottomMenuAuth from 'components/BottomMenu/BottomMenuAuth';
 
 interface HomePageProps {}
 
@@ -31,6 +33,14 @@ const WelcomeCard = styled.div`
   }
 `;
 
+const MenuBottomWrapper = styled.div`
+  height: 80vh;
+
+  @media (max-height: 650px) {
+    height: 90vh;
+  }
+`;
+
 const HomePage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
@@ -49,8 +59,14 @@ const HomePage: FC<HomePageProps> = () => {
           <Button dark>{t('welcome5')}</Button>
         </WelcomeCard>
       </Card>
+
       <ModalForm type='login' top={20} />
       <ModalForm type='signin' top={38} />
+      <BottomMenu>
+        <MenuBottomWrapper>
+          <BottomMenuAuth />
+        </MenuBottomWrapper>
+      </BottomMenu>
     </>
   );
 };

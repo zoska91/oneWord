@@ -33,14 +33,13 @@ const SelectField: FC<SelectFieldProps> = ({
 
   const { t } = useTranslation();
   const values = getValues();
-  console.log(values[name]);
 
   return (
     <FormControl isInvalid={Boolean(errors[name])}>
       {label ? label : <FormLabel>{t(`form.${name}Label`)}</FormLabel>}
       {desc && <Desc>{t(`form.${name}Desc`)}</Desc>}
       <Select
-        defaultValue='English'
+        defaultValue={values[name]}
         placeholder={label ? t('form.select') : t(`form.${name}Placeholder`)}
         {...themeInput}
         {...register(name, {

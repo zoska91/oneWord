@@ -2,8 +2,9 @@ import { FC } from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 
-import TextareaAutosize from '@mui/material/TextareaAutosize';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { useGlobalState } from 'state';
+import { device } from 'styles/devices';
 
 interface InputViewProps {}
 
@@ -20,6 +21,10 @@ const WordAnswerInput = styled(TextareaAutosize)`
   text-align: center;
   color: ${({ theme }) => theme.colorPrimary};
   letter-spacing: 1px;
+
+  @media ${device.mobileL} {
+    font-size: 1rem;
+  }
 `;
 
 const Word = styled.p`
@@ -29,6 +34,10 @@ const Word = styled.p`
   text-transform: uppercase;
   letter-spacing: 2px;
   text-align: center;
+
+  @media ${device.mobileL} {
+    font-size: 1.5rem;
+  }
 `;
 
 const InputView: FC<InputViewProps> = () => {

@@ -15,7 +15,10 @@ interface BubbleProps {
 }
 
 const BubbleStyled = styled.div<BubbleProps>`
-  background-image: linear-gradient(${({ directions }) => directions}, ${({ colors }) => colors});
+  background-image: linear-gradient(
+    ${({ directions }) => directions},
+    ${({ colors }) => colors}
+  );
 
   border-radius: 50%;
   position: fixed;
@@ -24,8 +27,10 @@ const BubbleStyled = styled.div<BubbleProps>`
   height: ${({ height }) => height};
   width: ${({ width }) => width};
 
-  box-shadow: 0 1rem 1.25rem 0 rgba(186, 193, 211, 0.247), 0 -0.25rem 1.5rem #7c7a7a4c inset,
-    0 0.75rem 0.5rem rgba(255, 255, 255, 0.37) inset, 0 0.25rem 0.5rem 0 #e2e2e253 inset;
+  box-shadow: 0 1rem 1.25rem 0 rgba(186, 193, 211, 0.247),
+    0 -0.25rem 1.5rem #7c7a7a4c inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.37) inset,
+    0 0.25rem 0.5rem 0 #e2e2e253 inset;
 
   filter: blur(${({ blur }) => blur});
 

@@ -14,8 +14,8 @@ import {
 import AsideButton from '../atoms/AsideButton';
 import AddWordForm from './AddWordForm';
 import PreferencesForm from './PreferencesForm';
-import LoginForm from './LoginForm';
-import SignForm from './SignForm';
+import LoginForm from '../auth/LoginForm';
+import SignForm from '../auth/SignForm';
 
 interface ModalFormProps {
   type: string;
@@ -49,7 +49,9 @@ const ModalForm: FC<ModalFormProps> = ({ type, top, modalSize = '2xl' }) => {
         <ModalOverlay />
 
         <StyledModalContent bg='rgba(255,255,255, 0.6)' borderRadius='30'>
-          <StyledModalHeader fontSize='4xl'>{t(`form.${type}Title`)}</StyledModalHeader>
+          <StyledModalHeader fontSize='4xl'>
+            {t(`form.${type}Title`)}
+          </StyledModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {type === 'addWord' && <AddWordForm onClose={onClose} />}

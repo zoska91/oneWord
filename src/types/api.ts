@@ -7,3 +7,12 @@ export interface ITodayWord {
   userId: string;
   wordId?: string;
 }
+
+export interface ISettings {
+  selectLanguage: string;
+  isSummary: boolean;
+  isBreak: boolean;
+  notifications: { type: number; time: string }[];
+  summaryDay: number;
+  breakDay: number;
+}

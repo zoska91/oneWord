@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Img from 'assets/img/Google__G__Logo.svg';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
+import { device } from 'styles/devices';
 
 interface GoogleButtonProps {
   onClick: () => void;
@@ -38,6 +39,30 @@ const Wrapper = styled.button`
     font-family: 'Josefin Sans', sans-serif;
     margin-right: auto;
     font-size: 1.3rem;
+  }
+
+  @media ${device.tablet} {
+    background-color: #fff;
+    width: calc(100% - 120px);
+    margin: 20px auto 0;
+    padding: 10px 10px;
+
+    span {
+      font-size: 1rem;
+    }
+
+    img {
+      margin-right: 10px;
+    }
+  }
+
+  @media ${device.mobileL} {
+    padding: 10px 5px;
+    width: calc(100% - 70px);
+
+    img {
+      margin-right: 5px;
+    }
   }
 `;
 

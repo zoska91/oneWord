@@ -5,8 +5,9 @@ import { learnTypes } from 'constants/constants';
 import { flexCenter } from 'styles/mixins';
 import { useGlobalState } from 'state';
 import { useButtonsActions } from './useButtonActions';
-import Button from 'components/atoms/Button';
 import { useTranslation } from 'react-i18next';
+import { device } from 'styles/devices';
+import Button from 'components/atoms/Button';
 
 interface ButtonSectionProps {}
 
@@ -18,6 +19,19 @@ const Wrapper = styled.div`
   z-index: 10;
 
   ${flexCenter}
+
+  @media ${device.tablet} {
+    flex-direction: column;
+    bottom: 13%;
+
+    button {
+      margin: 10px 0;
+    }
+
+    button:nth-child(1) {
+      order: 1;
+    }
+  }
 `;
 
 const ButtonsSection: FC<ButtonSectionProps> = () => {
@@ -34,12 +48,17 @@ const ButtonsSection: FC<ButtonSectionProps> = () => {
       <Button onClick={iKnow}>{t('iKnow')}</Button>
 
       {(learnType === learnTypes.INPUT || learnType === learnTypes.QUIZ) && (
-        <Button onClick={() => submit(learnType)} dark disabled={!currentAnswer || blockSubmit}>
+        <Button
+          onClick={() => submit(learnType)}
+          dark
+          disabled={!currentAnswer || blockSubmit}
+        >
           {t('submit')}
         </Button>
       )}
 
-      {(learnType === learnTypes.QUIZ || learnType === learnTypes.SHOW_WORD) && (
+      {(learnType === learnTypes.QUIZ ||
+        learnType === learnTypes.SHOW_WORD) && (
         <Button onClick={showAnswer}>{t('showAnswer')}</Button>
       )}
 

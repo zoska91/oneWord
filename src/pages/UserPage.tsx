@@ -21,6 +21,9 @@ import { logOut } from 'db/API/auth';
 import AsideButton from 'components/atoms/AsideButton';
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import { getTodayWordAPI } from 'db/API/words';
+import { device } from 'styles/devices';
+import BottomMenu from 'components/BottomMenu/BottomMenu';
+import BottomMenuUser from 'components/BottomMenu/BottomMenuUser';
 
 interface HomePageProps {}
 
@@ -28,6 +31,13 @@ const WordCard = styled.div`
   height: 100%;
   width: 100%;
   padding: 0 30px;
+
+  @media ${device.tablet} {
+    width: 80vw;
+    min-width: 280px;
+    height: 55vh;
+    padding: 20px;
+  }
 `;
 
 const BasicWord = styled.p`
@@ -41,6 +51,10 @@ const BasicWord = styled.p`
   text-shadow: 2px 2px 0px #fff;
 
   ${flexCenter}
+
+  @media ${device.tablet} {
+    font-size: 1.5rem;
+  }
 `;
 
 const TransWord = styled.div`
@@ -50,6 +64,18 @@ const TransWord = styled.div`
   flex: 1 0 auto;
 
   ${flexCenter}
+
+  @media ${device.tablet} {
+    min-height: 30%;
+  }
+`;
+
+export const MenuBottomWrapper = styled.div`
+  height: 94vh;
+
+  @media (max-height: 650px) {
+    height: 98vh;
+  }
 `;
 
 const UserPage: FC<HomePageProps> = () => {
@@ -93,7 +119,7 @@ const UserPage: FC<HomePageProps> = () => {
         <>
           <Background />
           <Title>{t('todaysWord')}</Title>
-          <Card>
+          <Card upper>
             {!closeLearn ? (
               <WordCard>
                 <BasicWord>{todaysWord.basicWord}</BasicWord>
@@ -118,6 +144,12 @@ const UserPage: FC<HomePageProps> = () => {
             top={80}
             onClick={handleLogout}
           />
+
+          <BottomMenu>
+            <MenuBottomWrapper>
+              <BottomMenuUser />
+            </MenuBottomWrapper>
+          </BottomMenu>
         </>
       )}
     </>

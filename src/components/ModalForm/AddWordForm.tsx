@@ -11,7 +11,7 @@ import ModalFooter from './ModalFooter';
 import { addWordAPI } from 'db/API/words';
 
 interface AddWordFormProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
@@ -29,9 +29,9 @@ const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        style={{ padding: '50px 50px 20px' }}
+        style={{ padding: !onClose ? '10px 30px' : '50px 50px 20px' }}
       >
-        <Stack spacing={6}>
+        <Stack spacing={6} marginBottom={!onClose ? 10 : 0}>
           <InputField name='basicWord' required />
           <InputField name='transWord' required />
           <SelectField name='addLang' required options={addLangOptions} />
