@@ -11,10 +11,7 @@ import PreferencesFormBottom from 'components/ModalForm/PreferencesFormBottom';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import PlaylistAddOutlinedIcon from '@material-ui/icons/PlaylistAddOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import Button from '@material-ui/core/Button';
-import Backdrop from '@material-ui/core/Backdrop';
 import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
@@ -32,11 +29,24 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled(Text)<StylesProps>`
+  position: relative;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colorPrimary};
   font-family: 'Josefin Sans', sans-serif;
   text-align: center;
   transition: 0.5s;
+
+  .MuiSpeedDialAction-staticTooltipLabel {
+    font-size: 0.75rem;
+    color: ${({ theme }) => theme.colorPrimary};
+    display: flex;
+    width: 120px;
+    flex-direction: row-reverse;
+  }
+
+  .MuiFab-root {
+    width: 40px;
+  }
 `;
 
 const PreferencesContainer = styled.div<StylesProps>`
@@ -62,19 +72,6 @@ const PreferencesContainer = styled.div<StylesProps>`
       bottom: -20px;
       border-radius: 20px 20px 0 0;
     `}
-`;
-
-const ActionButton = styled.button<StylesProps>`
-  display: block;
-  background-color: ${({ theme }) => theme.colorPrimary};
-  padding: 7px 13px;
-  color: ${({ theme }) => theme.colorLight};
-  border-radius: 20px;
-  font-weight: bold;
-  font-family: 'Josefin Sans', sans-serif;
-  font-size: 1.1rem;
-
-  ${flexCenter}
 `;
 
 const BottomMenuUser: FC<BottomMenuUserProps> = () => {
@@ -121,31 +118,38 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
           <PreferencesContainer isAddWord={isAddWord}>
             {!isAddWord && (
               <>
-                <Header fontSize='3xl'>
+                <Header fontSize='3xl' paddingRight={10}>
                   {t(`form.preferencesTitle`)}
 
                   <SpeedDial
                     direction='down'
                     ariaLabel='Menu'
-                    icon={<MoreVertIcon />}
+                    icon={<MoreVertIcon fontSize='small' />}
                     onClose={() => setOpenMenu(false)}
                     onOpen={() => setOpenMenu(true)}
                     open={openMenu}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 10,
+                      height: 50,
+                    }}
                   >
                     {actions.map(action => (
                       <SpeedDialAction
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
+                        tooltipOpen
                         onClick={() => {
-                          // action.onClick();
+                          action.onClick();
                           setOpenMenu(false);
                         }}
                       />
                     ))}
                   </SpeedDial>
                 </Header>
-                <PreferencesFormBottom />
+                <PreferencesFormBottom openMenu={openMenu} />
                 <Grid templateColumns='repeat(3, 1fr)' gap={1} p={2}></Grid>
               </>
             )}

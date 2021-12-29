@@ -33,9 +33,8 @@ const Bg = styled.div<styleProps>`
 
   @media ${device.tablet} {
     top: ${({ upper }) => (upper ? '52%' : '55%')};
-    height:  ${({ upper }) => (upper ? '80vh' : '60vh')};;
-
-  }}
+    height: ${({ upper }) => (upper ? '80vh' : '60vh')};
+  }
 `;
 
 const TextWrapper = styled.div<styleProps>`

@@ -13,12 +13,21 @@ import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import InputField from 'components/atoms/Inputs/InputField';
 import Button from 'components/atoms/Button';
 
-const Form = styled.form`
+interface PreferencesFormBottomProps {
+  openMenu?: boolean;
+}
+interface StylesProps {
+  openMenu?: boolean;
+}
+
+const Form = styled.form<StylesProps>`
   padding: 0 20px;
   height: 80%;
   overflow-y: auto;
   width: 100%;
   overflow-x: hidden;
+  filter: ${({ openMenu }) => (openMenu ? 'blur(4px)' : null)};
+  transition: 0.3s;
 `;
 
 const Separator = styled.hr`
@@ -27,9 +36,9 @@ const Separator = styled.hr`
   margin: 30px 0;
 `;
 
-interface PreferencesFormBottomProps {}
-
-const PreferencesFormBottom: FC<PreferencesFormBottomProps> = () => {
+const PreferencesFormBottom: FC<PreferencesFormBottomProps> = ({
+  openMenu,
+}) => {
   const { t } = useTranslation();
 
   const { selectLanguageOptions, daysOptions, learnTypesOptions } =
@@ -48,7 +57,7 @@ const PreferencesFormBottom: FC<PreferencesFormBottomProps> = () => {
 
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit)} openMenu={openMenu}>
         <Box>
           <Stack>
             <SelectField
