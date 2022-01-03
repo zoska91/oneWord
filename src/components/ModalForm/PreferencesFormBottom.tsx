@@ -3,8 +3,7 @@ import CheckboxField from 'components/atoms/Inputs/CheckboxField';
 import SelectField from 'components/atoms/Inputs/SelectInput';
 import { FC } from 'react';
 import { FormProvider } from 'react-hook-form';
-import styled from 'styled-components';
-import usePreferencesForm from './PreferencesForm.hooks';
+import usePreferencesForm from './usePreferencesForm';
 import useGenerateOptionsFields from './useGenereteOptionsFields';
 
 import * as S from './Form.css';
@@ -13,28 +12,11 @@ import { AddIcon, DeleteIcon } from '@chakra-ui/icons';
 import InputField from 'components/atoms/Inputs/InputField';
 import Button from 'components/atoms/Button';
 
+import { FormBottom as Form, Separator } from './Form.css';
+
 interface PreferencesFormBottomProps {
   openMenu?: boolean;
 }
-interface StylesProps {
-  openMenu?: boolean;
-}
-
-const Form = styled.form<StylesProps>`
-  padding: 0 20px;
-  height: 80%;
-  overflow-y: auto;
-  width: 100%;
-  overflow-x: hidden;
-  filter: ${({ openMenu }) => (openMenu ? 'blur(4px)' : null)};
-  transition: 0.3s;
-`;
-
-const Separator = styled.hr`
-  background-color: ${({ theme }) => theme.colorPrimary};
-  height: 2px;
-  margin: 30px 0;
-`;
 
 const PreferencesFormBottom: FC<PreferencesFormBottomProps> = ({
   openMenu,

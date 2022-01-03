@@ -11,7 +11,7 @@ import CheckboxField from 'components/atoms/Inputs/CheckboxField';
 import InputField from 'components/atoms/Inputs/InputField';
 import ModalFooter from './ModalFooter';
 import Spiner from 'components/atoms/Spiner';
-import usePreferencesForm from './PreferencesForm.hooks';
+import usePreferencesForm from './usePreferencesForm';
 
 interface PreferencesFormProps {
   onClose?: () => void;
@@ -35,7 +35,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
   return (
     <>
       {selectLanguageOptions.length === 0 ? (
-        <Spiner />
+        <Spiner color='#2e2757' />
       ) : (
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>

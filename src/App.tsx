@@ -7,8 +7,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import GlobalStyle from 'styles/GlobalStyle';
 import { theme } from 'styles/theme';
 import { routes } from 'routes';
-import HomePage from 'pages/HomePage';
-import UserPage from 'pages/UserPage';
+import HomePage from 'pages/Home/HomePage';
+import UserPage from 'pages/User/UserPage';
 // import { getUserSettingsAPI } from 'db/API/settings';
 
 function App() {

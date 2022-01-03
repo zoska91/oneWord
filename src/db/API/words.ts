@@ -6,6 +6,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
   addDoc,
   Timestamp,
   serverTimestamp,
@@ -15,9 +16,44 @@ import {
 import { db } from 'db/config';
 import { getCurrentUser } from './auth';
 import { IInputsAddWord } from 'components/ModalForm/formTypes';
+import { ITodayWord } from 'types/api';
+
+export const getShuffleWordsAPI = async () => {
+  const { selectLanguage } = await getUserSettingsAPI();
+  const { userId } = getCurrentUser();
+  const q = query(
+    collection(db, 'words'),
+    where('addLang', '==', selectLanguage),
+    where('userId', '==', userId)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  // TODO ts - problem with types from firestore
+  let words: any[] = [];
+
+  querySnapshot.forEach(doc => {
+    words = [...words, { ...doc.data(), wordId: doc.id }];
+  });
+
+  const shuffleWords: any = [];
+
+  while (shuffleWords.length < 3) {
+    const randomIndex = Math.floor(Math.random() * words.length);
+    if (!shuffleWords.includes(words[randomIndex]))
+      shuffleWords.push(words[randomIndex]);
+  }
+
+  return shuffleWords.map((el: ITodayWord) => ({
+    id: el.wordId,
+    text: el.transWord,
+  }));
+};
 
 export const getTodayWordAPI = async () => {
   const { userId } = getCurrentUser();
+
+  // get today word (if exist)
   if (userId) {
     const q = query(
       collection(db, 'words'),
@@ -27,6 +63,7 @@ export const getTodayWordAPI = async () => {
 
     const querySnapshot = await getDocs(q);
 
+    // check if today word exist
     if (querySnapshot.size === 0) {
       const word = await getRandomWordAPI();
       return word;
@@ -35,7 +72,12 @@ export const getTodayWordAPI = async () => {
       querySnapshot.forEach(doc => {
         word = { ...doc.data(), wordId: doc.id };
       });
-      return word;
+
+      const shuffleWords = await getShuffleWordsAPI();
+      //  @ts-ignore
+      const correctAnswer = { id: word.wordId, text: word.transWord };
+
+      return { ...word, randomWords: shuffleWords, correctAnswer };
     }
   }
 };
@@ -62,8 +104,13 @@ export const getRandomWordAPI = async () => {
   const randomIndex = Math.floor(Math.random() * words.length);
   const todayWord = words[randomIndex];
 
-  updateWordAPI(todayWord.wordId, { ...todayWord, status: 1 });
-  return todayWord;
+  // change status to 1 - today word
+  changeStatusAPI(todayWord.wordId, 1);
+
+  const shuffleWords = await getShuffleWordsAPI();
+  const correctAnswer = { id: todayWord.wordId, text: todayWord.transWord };
+
+  return { ...todayWord, shuffleWords, correctAnswer };
 };
 
 export const addWordAPI = async (data: IInputsAddWord) => {
@@ -100,6 +147,21 @@ export const updateWordAPI = async (
   }
 };
 
+export const changeStatusAPI = async (wordId: string, status: number) => {
+  const docRef = doc(db, 'words', wordId);
+  const docSnap = await getDoc(docRef);
+
+  try {
+    await updateDoc(docRef, {
+      ...docSnap.data(),
+      updatedDate: serverTimestamp(),
+      status,
+    });
+  } catch (e) {
+    createNotification('Something went wrong', 'error');
+  }
+};
+
 export const deleteWordAPI = async (id: string) => {
   await deleteDoc(doc(db, 'word', id));
 };
@@ -107,5 +169,4 @@ export const deleteWordAPI = async (id: string) => {
 //status
 // 0 - new (to learn)
 // 1 - today
-// 2 - known
-// 3 -
+// 2 - done

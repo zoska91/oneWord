@@ -20,6 +20,9 @@ const ModalFooter: FC<ModalFooterProps> = ({ onClose }) => {
           <Button small onClick={onClose}>
             {t('buttons.close')}
           </Button>
+          <Button dark small type='submit'>
+            {t('buttons.submit')}
+          </Button>
         </ModalFooterComponent>
       ) : (
         <Center>

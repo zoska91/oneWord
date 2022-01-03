@@ -8,11 +8,29 @@ export interface ITodayWord {
   wordId?: string;
 }
 
+export interface INotification {
+  type: string;
+  time: string;
+}
+
 export interface ISettings {
+  id?: string;
   selectLanguage: string;
   isSummary: boolean;
   isBreak: boolean;
-  notifications: { type: number; time: string }[];
+  notifications: INotification[];
   summaryDay: number;
   breakDay: number;
+}
+
+export interface wordAnswer {
+  id: string;
+  text: string;
+}
+
+export enum IlearnTypes {
+  SHOW_WORD,
+  INPUT,
+  QUIZ,
+  APPEAR,
 }

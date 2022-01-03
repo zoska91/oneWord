@@ -13,6 +13,7 @@ import {
 import { db } from 'db/config';
 import { getCurrentUser } from './auth';
 import { IInputsPreferences } from 'components/ModalForm/formTypes';
+import { createNotification } from 'common/notifications';
 
 export const createDefaultSettingsAPI = async (userId: string) => {
   try {
@@ -41,24 +42,34 @@ export const getUserSettingsAPI = async () => {
 
   let data: any = [];
 
-  querySnapshot.forEach(doc => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data());
-    data = [...data, doc.data()];
-  });
-  console.log(data);
-  return { data: data[0], selectLanguage: data[0].selectLanguage };
+  try {
+    querySnapshot.forEach(doc => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.id, ' => ', doc.data());
+      data = [...data, { ...doc.data(), id: doc.id }];
+    });
+    return { data: data[0], selectLanguage: data[0].selectLanguage };
+  } catch (e) {
+    createNotification('Something went wrong. Try again!', 'error');
+    return { data: defaultSettingsData, selectLanguage: 'en' };
+  }
 };
 
 export const updateUserSettings = async (
   id: string,
   dataToUpdate: IInputsPreferences
 ) => {
-  const washingtonRef = doc(db, 'settings', id);
+  const docRef = doc(db, 'settings', id);
 
   // Set the "capital" field of the city 'DC'
-  await updateDoc(washingtonRef, {
-    ...dataToUpdate,
-    updatedDate: serverTimestamp(),
-  });
+  try {
+    await updateDoc(docRef, {
+      ...dataToUpdate,
+      updatedDate: serverTimestamp(),
+    });
+    createNotification('Setting updated!', 'success');
+  } catch (e) {
+    console.log(e);
+    createNotification('Something went wrong. Try again!', 'error');
+  }
 };

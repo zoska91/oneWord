@@ -7,7 +7,6 @@ export const en = {
   todaysWord: `today's word`,
   yourAnswer: `your answer`,
   submit: `Submit`,
-  iKnow: `Mark this as I know`,
   showAnswer: `Show answer`,
   goodToKnow: `Good to know`,
   showTranslate: `Show Translate`,
@@ -15,7 +14,7 @@ export const en = {
     iKnow: 'We mark this word as you know. Next word will be different!',
     goodToKnow: `It's another small step to success! Great!`,
     dontGiveUp: `Next time will be better! Don't give up!`,
-    correctAnswer: `Greate! It's good answer. Push button 'Mark as I know' if you don't want see this word today. Otherwise  push 'Good to know'`,
+    correctAnswer: `Greate! It's good answer`,
   },
   closeLearn: `Take a break! We will let you know when it's time to learn :)`,
 
@@ -89,5 +88,10 @@ export const en = {
     weakPassword: 'Password should be at least 6 characters',
     existsMail: 'This mail already exists',
     userNotFound: 'User not found',
+  },
+  actionsBottomMenu: {
+    addWord: 'add word',
+    wordsList: 'words list',
+    logout: 'logout',
   },
 };

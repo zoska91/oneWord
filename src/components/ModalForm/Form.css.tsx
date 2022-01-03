@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ModalContent, ModalHeader } from '@chakra-ui/react';
 
 interface ButtonType {
   isAdd?: boolean;
@@ -6,6 +7,10 @@ interface ButtonType {
 
 interface LabelType {
   big?: boolean;
+}
+
+interface FormBottomProps {
+  openMenu?: boolean;
 }
 
 export const ActionButton = styled.button<ButtonType>`
@@ -56,4 +61,33 @@ export const FormLabel = styled.label<LabelType>`
   @media (max-height: 650px) {
     font-size: ${({ big }) => big && '1.1rem'};
   }
+`;
+
+export const StyledModalContent = styled(ModalContent)`
+  backdrop-filter: blur(6px);
+  padding: 40px;
+  border-radius: 20px;
+`;
+
+export const StyledModalHeader = styled(ModalHeader)`
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colorPrimary};
+  text-shadow: 1px 1px 5px #ffffffae;
+  font-family: 'Josefin Sans', sans-serif;
+`;
+
+export const FormBottom = styled.form<FormBottomProps>`
+  padding: 0 20px;
+  height: 80%;
+  overflow-y: auto;
+  width: 100%;
+  overflow-x: hidden;
+  filter: ${({ openMenu }) => (openMenu ? 'blur(4px)' : null)};
+  transition: 0.3s;
+`;
+
+export const Separator = styled.hr`
+  background-color: ${({ theme }) => theme.colorPrimary};
+  height: 2px;
+  margin: 30px 0;
 `;

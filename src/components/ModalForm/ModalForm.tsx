@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import {
   Modal,
   ModalOverlay,
-  ModalContent,
-  ModalHeader,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -17,24 +14,13 @@ import PreferencesForm from './PreferencesForm';
 import LoginForm from '../auth/LoginForm';
 import SignForm from '../auth/SignForm';
 
+import { StyledModalContent, StyledModalHeader } from './Form.css';
+
 interface ModalFormProps {
   type: string;
   top: number;
   modalSize?: string;
 }
-
-const StyledModalContent = styled(ModalContent)`
-  backdrop-filter: blur(6px);
-  padding: 40px;
-  border-radius: 20px;
-`;
-
-const StyledModalHeader = styled(ModalHeader)`
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colorPrimary};
-  text-shadow: 1px 1px 5px #ffffffae;
-  font-family: 'Josefin Sans', sans-serif;
-`;
 
 const ModalForm: FC<ModalFormProps> = ({ type, top, modalSize = '2xl' }) => {
   const { t } = useTranslation();
