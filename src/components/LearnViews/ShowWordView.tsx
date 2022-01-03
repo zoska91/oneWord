@@ -7,8 +7,9 @@ interface ShowWordViewProps {}
 
 const ShowWordView: FC<ShowWordViewProps> = () => {
   const [todaysWord] = useGlobalState('todaysWord');
+  const [isAnswerShow] = useGlobalState('isAnswerShow');
 
-  return <S.Word>{todaysWord.transWord}</S.Word>;
+  return <S.Word>{isAnswerShow && todaysWord.transWord}</S.Word>;
 };
 
 export default ShowWordView;

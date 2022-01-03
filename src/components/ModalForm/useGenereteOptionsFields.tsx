@@ -26,10 +26,10 @@ const useGenerateOptionsFields = () => {
   ];
 
   const learnTypesOptions = [
-    { value: 1, label: 'Show word' },
-    { value: 2, label: 'Quiz' },
-    { value: 3, label: 'Gues word' },
-    { value: 3, label: 'Appear word ' },
+    { value: 'SHOW_WORD', label: 'Show word' },
+    { value: 'QUIZ', label: 'Quiz' },
+    { value: 'INPUT', label: 'Gues word' },
+    { value: 'APPEAR', label: 'Appear word ' },
   ];
 
   useEffect(() => {

@@ -16,29 +16,27 @@ const ButtonsSection: FC<ButtonSectionProps> = () => {
   const [learnType] = useGlobalState('learnType');
   const [currentAnswer] = useGlobalState('currentAnswer');
   const [blockSubmit] = useGlobalState('blockSubmit');
+  const [blockShowAnswerButton] = useGlobalState('blockShowAnswerButton');
 
-  const { submit, iKnow, showAnswer, gootToKnow } = useButtonsActions();
+  const { submit, showAnswer } = useButtonsActions();
 
   return (
     <Wrapper>
-      <Button onClick={iKnow}>{t('iKnow')}</Button>
-
       {(learnType === learnTypes.INPUT || learnType === learnTypes.QUIZ) && (
         <Button
           onClick={() => submit(learnType)}
-          dark
+          secondaryColor
           disabled={!currentAnswer || blockSubmit}
         >
           {t('submit')}
         </Button>
       )}
 
-      {(learnType === learnTypes.QUIZ ||
-        learnType === learnTypes.SHOW_WORD) && (
-        <Button onClick={showAnswer}>{t('showAnswer')}</Button>
+      {learnType === learnTypes.SHOW_WORD && (
+        <Button onClick={showAnswer} disabled={blockShowAnswerButton}>
+          {t('showAnswer')}
+        </Button>
       )}
-
-      <Button onClick={gootToKnow}>{t('goodToKnow')}</Button>
     </Wrapper>
   );
 };

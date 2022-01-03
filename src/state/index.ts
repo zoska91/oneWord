@@ -4,28 +4,33 @@ import { Istate } from './../types/state';
 
 const inisialState: Istate = {
   blockSubmit: false,
-  learnType: learnTypes.INPUT,
+  blockShowAnswerButton: false,
+  learnType: '',
   currentAnswer: null,
   isAnswerShow: false,
   todaysWord: {
-    basicWord: 'jakieś zajebiste słowo',
-    transWord: 'home home home home home wsdvbwerui hlsijvweh ',
-    correntAnswer: {
-      id: 1,
-      text: 'home',
+    addLang: '',
+    userId: '',
+    wordId: '',
+    status: 0,
+    basicWord: '',
+    transWord: '',
+    correctAnswer: {
+      id: '',
+      text: '',
     },
     randomWords: [
       {
-        id: 1,
-        text: 'ewje opij fwei [oipj fwe[iopj fwe;opk piohjfewpoih fdqwdqwu wyug fweih uyefcewuoyi  ufe oijn foewiuh ojnf weuion oiufjn ;eojnfuiwenf ewjn uoi ufh wepifhn wekjfnuiwe nfuwenfejiwhf jkdhf weuiohf wepioujfhwe iufhwe liuh',
+        id: '',
+        text: '',
       },
       {
-        id: 2,
-        text: 'dwifbnwel',
+        id: '3',
+        text: '',
       },
       {
-        id: 3,
-        text: 'dwquh ifuewhf ewuih ;oihe fpoui fejh u ',
+        id: '4',
+        text: '',
       },
     ],
   },

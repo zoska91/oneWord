@@ -1,3 +1,4 @@
+import Spiner from 'components/atoms/Spiner';
 import { FC } from 'react';
 import { useGlobalState } from 'state';
 
@@ -12,18 +13,25 @@ const QuizView: FC<QuizViewProps> = () => {
   const [currentAnswer, setCurrentAnswer] = useGlobalState('currentAnswer');
 
   return (
-    <S.SingleAnswerWrapper>
-      {todaysWord.randomWords.map((el, i) => (
-        <S.SingleAnswer
-          key={`${el}-${i}`}
-          active={el.id === currentAnswer}
-          style={{ boxShadow: `inset 7px 9px 30px -18px ${colors[i]}` }}
-          onClick={() => setCurrentAnswer(el.id)}
-        >
-          {el.text}
-        </S.SingleAnswer>
-      ))}
-    </S.SingleAnswerWrapper>
+    <>
+      {console.log(todaysWord.randomWords)}
+      {todaysWord.randomWords.length < 1 ? (
+        <Spiner />
+      ) : (
+        <S.SingleAnswerWrapper>
+          {todaysWord.randomWords.map((el, i) => (
+            <S.SingleAnswer
+              key={`${el}-${i}`}
+              active={el.id === currentAnswer}
+              style={{ boxShadow: `inset 7px 9px 30px -18px ${colors[i]}` }}
+              onClick={() => setCurrentAnswer(el.id)}
+            >
+              {el.text}
+            </S.SingleAnswer>
+          ))}
+        </S.SingleAnswerWrapper>
+      )}
+    </>
   );
 };
 

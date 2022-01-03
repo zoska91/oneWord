@@ -22,7 +22,7 @@ const InputView: FC<InputViewProps> = () => {
           autoFocus={true}
           placeholder={t('yourAnswer')}
           value={typeof currentAnswer === 'string' ? currentAnswer : ''}
-          onChange={e => setCurrentAnswer(e.target.value)}
+          onChange={e => setCurrentAnswer(e.target.value.toUpperCase())}
         />
       )}
     </>

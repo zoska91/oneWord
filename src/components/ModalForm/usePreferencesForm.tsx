@@ -1,4 +1,4 @@
-import { getUserSettingsAPI } from 'db/API/settings';
+import { getUserSettingsAPI, updateUserSettings } from 'db/API/settings';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { ISettings } from 'types/api';
@@ -29,7 +29,9 @@ const usePreferencesForm = () => {
     if (defaultValues) reset(defaultValues);
   }, [defaultValues]);
 
-  const onSubmit: SubmitHandler<IInputsPreferences> = data => console.log(data);
+  const onSubmit: SubmitHandler<IInputsPreferences> = data => {
+    if (defaultValues?.id) updateUserSettings(defaultValues.id, data);
+  };
 
   return {
     onSubmit,

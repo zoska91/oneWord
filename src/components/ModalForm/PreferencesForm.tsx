@@ -35,7 +35,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
   return (
     <>
       {selectLanguageOptions.length === 0 ? (
-        <Spiner />
+        <Spiner color='#2e2757' />
       ) : (
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
