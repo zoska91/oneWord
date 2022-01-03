@@ -18,6 +18,7 @@ import { getCurrentUser } from './auth';
 import { IInputsAddWord } from 'components/ModalForm/formTypes';
 import { ITodayWord } from 'types/api';
 
+// get options to quiz view
 export const getShuffleWordsAPI = async () => {
   const { selectLanguage } = await getUserSettingsAPI();
   const { userId } = getCurrentUser();
@@ -50,6 +51,15 @@ export const getShuffleWordsAPI = async () => {
   }));
 };
 
+export const checkIsBreakDay = async () => {
+  const { data } = await getUserSettingsAPI();
+  const breakDay = data.breakDay;
+  const todayDate = new Date();
+  const todayDay = todayDate.getDay();
+  return +breakDay === +todayDay;
+};
+
+// main function to initial get word
 export const getTodayWordAPI = async () => {
   const { userId } = getCurrentUser();
 
@@ -82,6 +92,7 @@ export const getTodayWordAPI = async () => {
   }
 };
 
+// get word when its first time in current day
 export const getRandomWordAPI = async () => {
   const { selectLanguage } = await getUserSettingsAPI();
   const { userId } = getCurrentUser();

@@ -17,7 +17,7 @@ export const en = {
     correctAnswer: `Greate! It's good answer`,
   },
   closeLearn: `Take a break! We will let you know when it's time to learn :)`,
-
+  breakDayView: `Today is a break day! Just rest!`,
   buttons: {
     close: 'Close',
     submit: 'Submit',

@@ -24,4 +24,5 @@ export interface Istate {
   isAnswerShow: boolean;
   todaysWord: ITodaysWord;
   closeLearn: boolean;
+  breakDay: boolean;
 }

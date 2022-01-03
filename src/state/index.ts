@@ -1,4 +1,3 @@
-import { learnTypes } from 'constants/constants';
 import { createGlobalState } from 'react-hooks-global-state';
 import { Istate } from './../types/state';
 
@@ -35,6 +34,7 @@ const inisialState: Istate = {
     ],
   },
   closeLearn: false,
+  breakDay: false,
 };
 
 const { useGlobalState, setGlobalState } = createGlobalState(inisialState);
