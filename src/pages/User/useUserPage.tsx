@@ -3,7 +3,6 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { useGlobalState } from 'state';
 
-import { logOut } from 'db/API/auth';
 import { checkIsBreakDay, getTodayWordAPI } from 'db/API/words';
 import { getUserSettingsAPI } from 'db/API/settings';
 import { INotification } from 'types/api';
@@ -67,19 +66,14 @@ const useUserPage = () => {
     });
   }, []);
 
-  const handleLogout = async () => {
-    const result = await logOut();
-    if (result === 'success') setRedirect(true);
-  };
-
   return {
     redirect,
-    handleLogout,
     closeLearn,
     todaysWord,
     learnType,
     loading,
     breakDay,
+    setRedirect,
   };
 };
 

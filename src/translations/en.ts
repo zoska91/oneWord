@@ -71,6 +71,13 @@ export const en = {
     emailPlaceholder: 'Set login',
     passwordLabel: 'Password',
     passwordPlaceholder: 'Set password',
+
+    //words list
+    wordsListTitle: 'Words List',
+    editWordTitle: 'Edit Word',
+
+    statusLabel: 'Status',
+    statusPlaceholder: 'Select status',
   },
   days: {
     1: 'Monday',
@@ -94,4 +101,10 @@ export const en = {
     wordsList: 'words list',
     logout: 'logout',
   },
+  statusDict: {
+    new: 'New',
+    today: 'Today',
+    done: 'Learned',
+  },
+  wordCreated: 'A new word has been added ',
 };

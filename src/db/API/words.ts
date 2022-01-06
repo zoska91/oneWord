@@ -144,15 +144,16 @@ export const updateWordAPI = async (
   id: string,
   dataToUpdate: IInputsAddWord
 ) => {
-  const washingtonRef = doc(db, 'words', id);
+  const docRef = doc(db, 'words', id);
 
   // Set the "capital" field of the city 'DC'
   try {
-    await updateDoc(washingtonRef, {
+    const resp = await updateDoc(docRef, {
       ...dataToUpdate,
       updatedDate: serverTimestamp(),
     });
     console.log('dodano');
+    console.log(resp);
   } catch (e) {
     createNotification('Something went wrong', 'error');
   }
@@ -173,8 +174,30 @@ export const changeStatusAPI = async (wordId: string, status: number) => {
   }
 };
 
+export const getAllWordsOfCurrentUser = async () => {
+  const { userId } = getCurrentUser();
+  const { selectLanguage } = await getUserSettingsAPI();
+
+  const q = query(
+    collection(db, 'words'),
+    where('addLang', '==', selectLanguage),
+    where('userId', '==', userId)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  // TODO ts - problem with types from firestore
+  let words: any[] = [];
+
+  querySnapshot.forEach(doc => {
+    words = [...words, { ...doc.data(), wordId: doc.id }];
+  });
+  return words;
+};
+
 export const deleteWordAPI = async (id: string) => {
-  await deleteDoc(doc(db, 'word', id));
+  console.log(id);
+  await deleteDoc(doc(db, 'words', id));
 };
 
 //status

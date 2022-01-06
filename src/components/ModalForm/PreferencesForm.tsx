@@ -21,6 +21,7 @@ const PreferencesForm: FC<PreferencesFormProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const { selectLanguageOptions, daysOptions, learnTypesOptions } =
     useGenerateOptionsFields();
+
   const {
     onSubmit,
     watchSummary,

@@ -43,7 +43,7 @@ const Wrapper = styled.div<SpinerProps>`
   }
 `;
 
-const Spiner: FC<SpinerProps> = ({ color = '000' }) => {
+const Spiner: FC<SpinerProps> = ({ color = '#2e2757' }) => {
   return (
     <Wrapper color={color}>
       <div></div>

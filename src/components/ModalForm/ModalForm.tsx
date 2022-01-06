@@ -13,23 +13,23 @@ import AddWordForm from './AddWordForm';
 import PreferencesForm from './PreferencesForm';
 import LoginForm from '../auth/LoginForm';
 import SignForm from '../auth/SignForm';
+import WordsList from 'components/WordsList/WordsList';
 
 import { StyledModalContent, StyledModalHeader } from './Form.css';
 
 interface ModalFormProps {
   type: string;
-  top: number;
   modalSize?: string;
 }
 
-const ModalForm: FC<ModalFormProps> = ({ type, top, modalSize = '2xl' }) => {
+const ModalForm: FC<ModalFormProps> = ({ type, modalSize = '2xl' }) => {
   const { t } = useTranslation();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <>
-      <AsideButton label={t(`form.${type}Title`)} top={top} onClick={onOpen} />
+      <AsideButton label={t(`form.${type}Title`)} onClick={onOpen} />
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered size={modalSize}>
         <ModalOverlay />
@@ -44,6 +44,7 @@ const ModalForm: FC<ModalFormProps> = ({ type, top, modalSize = '2xl' }) => {
             {type === 'preferences' && <PreferencesForm onClose={onClose} />}
             {type === 'login' && <LoginForm onClose={onClose} />}
             {type === 'signin' && <SignForm onClose={onClose} />}
+            {type === 'wordsList' && <WordsList />}
           </ModalBody>
         </StyledModalContent>
       </Modal>
