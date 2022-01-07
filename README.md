@@ -1,4 +1,4 @@
-#ONE WORD a day
+# ONE WORD a day
 
 ## app to learn new language - words
 

@@ -1,6 +1,6 @@
 export const en = {
   welcome: `It's a pleasure to see you here.`,
-  welcome2: `I hope you want learn something!`,
+  welcome2: `I hope you want to learn something!`,
   welcome3: `You don't have much time?`,
   welcome4: `Great! One word a day it's enough!`,
   welcome5: `Let's start`,
@@ -100,6 +100,7 @@ export const en = {
     addWord: 'add word',
     wordsList: 'words list',
     logout: 'logout',
+    preferences: 'preferences',
   },
   statusDict: {
     new: 'New',

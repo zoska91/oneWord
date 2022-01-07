@@ -11,13 +11,23 @@ import PreferencesFormBottom from 'components/ModalForm/PreferencesFormBottom';
 import AddWordForm from 'components/ModalForm/AddWordForm';
 import * as S from './BottomMenu.css';
 import useBottomMenuUser from './useBottomMenuUser';
+import EditWordForm from 'components/WordsList/EditWordForm';
+import WordsList from 'components/WordsList/WordsList';
 
 interface BottomMenuUserProps {}
 
 const BottomMenuUser: FC<BottomMenuUserProps> = () => {
   const { t } = useTranslation();
-  const { redirect, isAddWord, openMenu, actions, setOpenMenu, setIsAddWord } =
-    useBottomMenuUser();
+  const {
+    redirect,
+    isAddWord,
+    openMenu,
+    actions,
+    setOpenMenu,
+    setIsAddWord,
+    isWordsList,
+    setIsWordsList,
+  } = useBottomMenuUser();
 
   return (
     <>
@@ -31,7 +41,11 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
             {!isAddWord && (
               <>
                 <S.Header fontSize='3xl' paddingRight={10}>
-                  {t(`form.preferencesTitle`)}
+                  {t(
+                    `form.${
+                      isWordsList ? 'wordsListTitle' : 'preferencesTitle'
+                    }`
+                  )}
 
                   <SpeedDial
                     direction='down'
@@ -61,7 +75,11 @@ const BottomMenuUser: FC<BottomMenuUserProps> = () => {
                     ))}
                   </SpeedDial>
                 </S.Header>
-                <PreferencesFormBottom openMenu={openMenu} />
+                {isWordsList ? (
+                  <WordsList type='mobile' />
+                ) : (
+                  <PreferencesFormBottom openMenu={openMenu} />
+                )}
                 <Grid templateColumns='repeat(3, 1fr)' gap={1} p={2}></Grid>
               </>
             )}

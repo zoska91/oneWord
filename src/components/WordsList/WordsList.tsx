@@ -7,18 +7,23 @@ import Spiner from 'components/atoms/Spiner';
 import * as S from './WordList.css';
 import useWordsList from './useWordsList';
 import ModalEditWord from './ModalEditWord';
+import EditWordForm from './EditWordForm';
 
-interface WordsListProps {}
+interface WordsListProps {
+  type?: string;
+}
 
-const WordsList: FC<WordsListProps> = () => {
+const WordsList: FC<WordsListProps> = ({ type }) => {
   const { words, deleteWord, statusDict, editWord, editingWord } =
     useWordsList();
 
   const wordsListRender = [...words].map(el => (
-    <S.SingleWord key={el.wordId} status={el.status}>
-      <span>{el.basicWord}</span>
-      <span>{el.transWord}</span>
-      <span className='status'>{statusDict[el.status]}</span>
+    <S.SingleWord key={el.wordId}>
+      <S.DataWord status={el.status}>
+        <span>{el.basicWord}</span>
+        <span>{el.transWord}</span>
+        <span className='status'>{statusDict[el.status]}</span>
+      </S.DataWord>
       <div>
         <EditIcon onClick={() => editWord(el)} />
         <DeleteIcon
@@ -34,10 +39,14 @@ const WordsList: FC<WordsListProps> = () => {
         <Spiner />
       ) : (
         <S.Wrapper>
-          <ul>{wordsListRender}</ul>
-          {editingWord && (
+          {type === 'mobile' && editingWord ? (
+            <EditWordForm onClose={() => editWord(null)} />
+          ) : (
+            <ul>{wordsListRender}</ul>
+          )}
+
+          {type !== 'mobile' && editingWord && (
             <ModalEditWord
-              data={editingWord}
               isOpen={editingWord ? true : false}
               onClose={() => editWord(null)}
             />
