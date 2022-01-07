@@ -32,6 +32,7 @@ const useWordsList = () => {
 
   const editWord = (word: ITodayWord | null) => {
     setEditingWord(word);
+    console.log(word);
   };
 
   const saveEditingWord = async (wordId: string, values: IInputsAddWord) => {
@@ -46,10 +47,6 @@ const useWordsList = () => {
       setWords([]);
     };
   }, []);
-
-  useEffect(() => {
-    if (editingWord === null) getAllWords();
-  }, [editingWord]);
 
   return {
     words: _.cloneDeep(words),

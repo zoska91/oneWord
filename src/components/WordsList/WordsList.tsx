@@ -14,8 +14,14 @@ interface WordsListProps {
 }
 
 const WordsList: FC<WordsListProps> = ({ type }) => {
-  const { words, deleteWord, statusDict, editWord, editingWord } =
-    useWordsList();
+  const {
+    words,
+    deleteWord,
+    statusDict,
+    editWord,
+    editingWord,
+    saveEditingWord,
+  } = useWordsList();
 
   const wordsListRender = [...words].map(el => (
     <S.SingleWord key={el.wordId}>
@@ -40,7 +46,11 @@ const WordsList: FC<WordsListProps> = ({ type }) => {
       ) : (
         <S.Wrapper>
           {type === 'mobile' && editingWord ? (
-            <EditWordForm onClose={() => editWord(null)} />
+            <EditWordForm
+              onClose={() => editWord(null)}
+              data={editingWord}
+              saveEditingWord={saveEditingWord}
+            />
           ) : (
             <ul>{wordsListRender}</ul>
           )}
@@ -49,6 +59,8 @@ const WordsList: FC<WordsListProps> = ({ type }) => {
             <ModalEditWord
               isOpen={editingWord ? true : false}
               onClose={() => editWord(null)}
+              data={editingWord}
+              saveEditingWord={saveEditingWord}
             />
           )}
         </S.Wrapper>

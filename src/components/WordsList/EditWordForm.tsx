@@ -9,12 +9,14 @@ import useGenerateOptionsFields from 'components/ModalForm/useGenereteOptionsFie
 import SelectField from 'components/atoms/Inputs/SelectInput';
 import { IInputsAddWord } from 'components/ModalForm/formTypes';
 import ModalFooter from 'components/ModalForm/ModalFooter';
-import useWordsList from './useWordsList';
 import styled from 'styled-components';
 import { device } from 'styles/devices';
+import { ITodayWord } from 'types/api';
 
 interface EditWordFormProps {
   onClose: () => void;
+  data: ITodayWord;
+  saveEditingWord: (wordId: string, values: IInputsAddWord) => void;
 }
 
 const Wrapper = styled.div`
@@ -24,9 +26,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const EditWordForm: FC<EditWordFormProps> = ({ onClose }) => {
+const EditWordForm: FC<EditWordFormProps> = ({
+  onClose,
+  data,
+  saveEditingWord,
+}) => {
   const { addLangOptions, statusDictOptions } = useGenerateOptionsFields();
-  const { saveEditingWord, editingWord: data } = useWordsList();
 
   const methods = useForm<IInputsAddWord>({
     defaultValues: data || {},

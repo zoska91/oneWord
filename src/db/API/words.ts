@@ -8,8 +8,6 @@ import {
   getDocs,
   getDoc,
   addDoc,
-  Timestamp,
-  serverTimestamp,
   deleteDoc,
   updateDoc,
 } from 'firebase/firestore';
@@ -76,12 +74,23 @@ export const getTodayWordAPI = async () => {
     // check if today word exist
     if (querySnapshot.size === 0) {
       const word = await getRandomWordAPI();
+
       return word;
     } else {
       let word = {};
       querySnapshot.forEach(doc => {
         word = { ...doc.data(), wordId: doc.id };
       });
+
+      let todayDate = new Date().toDateString();
+      //  @ts-ignore
+      const wordDate = word.updatedDate.toDate().toDateString();
+
+      if (todayDate !== wordDate) {
+        //  @ts-ignore
+        await changeStatusAPI(word?.wordId, 2);
+        getTodayWordAPI();
+      }
 
       const shuffleWords = await getShuffleWordsAPI();
       //  @ts-ignore
@@ -96,27 +105,38 @@ export const getTodayWordAPI = async () => {
 export const getRandomWordAPI = async () => {
   const { selectLanguage } = await getUserSettingsAPI();
   const { userId } = getCurrentUser();
+
   const q = query(
     collection(db, 'words'),
     where('addLang', '==', selectLanguage),
     where('userId', '==', userId),
-    where('status', '==', 0)
+    where('status', '==', '0')
   );
 
   const querySnapshot = await getDocs(q);
-
+  console.log(querySnapshot);
   // TODO ts - problem with types from firestore
   let words: any[] = [];
 
   querySnapshot.forEach(doc => {
+    console.log(doc);
     words = [...words, { ...doc.data(), wordId: doc.id }];
   });
+
+  if (querySnapshot.size === 0) {
+    createNotification(
+      'You dont have words yet or you learned all of them. Add some new one!',
+      'info'
+    );
+    return;
+  }
 
   const randomIndex = Math.floor(Math.random() * words.length);
   const todayWord = words[randomIndex];
 
   // change status to 1 - today word
-  changeStatusAPI(todayWord.wordId, 1);
+  console.log(words, todayWord);
+  await changeStatusAPI(todayWord.wordId, 1);
 
   const shuffleWords = await getShuffleWordsAPI();
   const correctAnswer = { id: todayWord.wordId, text: todayWord.transWord };
@@ -132,7 +152,7 @@ export const addWordAPI = async (data: IInputsAddWord) => {
       ...data,
       userId,
       status: 0,
-      createdDate: Timestamp.fromDate(new Date()),
+      createdDate: new Date(),
     });
     console.log('Document written with ID: ', docRef.id);
   } catch (e) {
@@ -150,7 +170,7 @@ export const updateWordAPI = async (
   try {
     const resp = await updateDoc(docRef, {
       ...dataToUpdate,
-      updatedDate: serverTimestamp(),
+      updatedDate: new Date(),
     });
     console.log('dodano');
     console.log(resp);
@@ -166,7 +186,7 @@ export const changeStatusAPI = async (wordId: string, status: number) => {
   try {
     await updateDoc(docRef, {
       ...docSnap.data(),
-      updatedDate: serverTimestamp(),
+      updatedDate: new Date(),
       status,
     });
   } catch (e) {

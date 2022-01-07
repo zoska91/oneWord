@@ -11,13 +11,21 @@ import { useTranslation } from 'react-i18next';
 import { StyledModalContent, StyledModalHeader } from '../ModalForm/Form.css';
 import { ITodayWord } from 'types/api';
 import EditWordForm from './EditWordForm';
+import { IInputsAddWord } from 'components/ModalForm/formTypes';
 
 interface ModalEditWordProps {
   isOpen: boolean;
   onClose: () => void;
+  data: ITodayWord;
+  saveEditingWord: (wordId: string, values: IInputsAddWord) => void;
 }
 
-const ModalEditWord: FC<ModalEditWordProps> = ({ onClose, isOpen }) => {
+const ModalEditWord: FC<ModalEditWordProps> = ({
+  onClose,
+  isOpen,
+  data,
+  saveEditingWord,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -30,7 +38,11 @@ const ModalEditWord: FC<ModalEditWordProps> = ({ onClose, isOpen }) => {
         </StyledModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <EditWordForm onClose={onClose} />
+          <EditWordForm
+            onClose={onClose}
+            data={data}
+            saveEditingWord={saveEditingWord}
+          />
         </ModalBody>
       </StyledModalContent>
     </Modal>

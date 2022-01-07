@@ -38,6 +38,10 @@ export const addDefaultSettingsIfNotExistsAPI = async (userId: string) => {
 export const getUserSettingsAPI = async () => {
   const { userId } = getCurrentUser();
 
+  if (!userId) {
+    return { data: defaultSettingsData, selectLanguage: 'en' };
+  }
+
   const q = query(collection(db, 'settings'), where('userId', '==', userId));
   const querySnapshot = await getDocs(q);
 
