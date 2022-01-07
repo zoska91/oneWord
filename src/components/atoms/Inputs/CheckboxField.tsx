@@ -20,7 +20,7 @@ const CheckboxField: FC<CheckboxFieldProps> = ({ name, required, desc }) => {
 
   const { t } = useTranslation();
   const values = getValues();
-  console.log(name, values[name]);
+
   return (
     <FormControl isInvalid={Boolean(errors[name])}>
       <FormControl isInvalid={Boolean(errors.summary)}>

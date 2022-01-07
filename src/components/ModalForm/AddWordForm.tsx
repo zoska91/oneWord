@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import { Stack } from '@chakra-ui/react';
 
@@ -9,20 +10,24 @@ import SelectField from 'components/atoms/Inputs/SelectInput';
 import useGenerateOptionsFields from './useGenereteOptionsFields';
 import ModalFooter from './ModalFooter';
 import { addWordAPI } from 'db/API/words';
+import { createNotification } from 'common/notifications';
 
 interface AddWordFormProps {
   onClose?: () => void;
 }
 
 const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
+  const { t } = useTranslation();
+
   const { addLangOptions } = useGenerateOptionsFields();
 
   const methods = useForm<IInputsAddWord>();
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
 
   const onSubmit: SubmitHandler<IInputsAddWord> = data => {
-    console.log(data);
     addWordAPI({ ...data });
+    createNotification(t(`wordCreated`), 'success');
+    reset();
   };
 
   return (

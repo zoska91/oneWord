@@ -37,6 +37,7 @@ export const addDefaultSettingsIfNotExistsAPI = async (userId: string) => {
 
 export const getUserSettingsAPI = async () => {
   const { userId } = getCurrentUser();
+
   const q = query(collection(db, 'settings'), where('userId', '==', userId));
   const querySnapshot = await getDocs(q);
 

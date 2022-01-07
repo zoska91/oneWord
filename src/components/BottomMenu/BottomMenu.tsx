@@ -1,18 +1,22 @@
+import useWindowSize from 'common/useResizeWindows';
 import { FC } from 'react';
 // @ts-ignore
 import SwipeableBottomSheet from 'react-swipeable-bottom-sheet';
 
 import * as S from './BottomMenu.css';
+
 interface HomePageProps {}
 
 const BottomMenu: FC<HomePageProps> = ({ children }) => {
+  const [width] = useWindowSize();
+
   return (
     <S.Wrapper>
       <SwipeableBottomSheet
         overflowHeight={25}
         style={{
           zIndex: 11,
-          width: '90vw',
+          width: width < 425 ? '100vw' : '90vw',
           minWidth: '320px',
           margin: '0 auto',
           backgroundColor: 'transparent',

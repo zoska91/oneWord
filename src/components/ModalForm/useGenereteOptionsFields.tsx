@@ -32,6 +32,12 @@ const useGenerateOptionsFields = () => {
     { value: 'APPEAR', label: 'Appear word ' },
   ];
 
+  const statusDictOptions = [
+    { value: 0, label: t('statusDict.new') },
+    { value: 1, label: t('statusDict.today') },
+    { value: 2, label: t('statusDict.done') },
+  ];
+
   useEffect(() => {
     setAddLangOptions([
       { value: 'en', label: 'English' },
@@ -51,6 +57,7 @@ const useGenerateOptionsFields = () => {
     selectLanguageOptions,
     daysOptions,
     learnTypesOptions,
+    statusDictOptions,
   };
 };
 

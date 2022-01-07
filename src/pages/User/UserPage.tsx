@@ -20,14 +20,23 @@ import Spiner from 'components/atoms/Spiner';
 
 import useUserPage from './useUserPage';
 import * as S from './UserPage.css';
+import BreakDayView from 'components/LearnViews/BreakDayView';
+import AsideMenu from 'components/AsideMenu/AsideMenu';
 
 interface HomePageProps {}
 
 const UserPage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
-  const { redirect, handleLogout, closeLearn, todaysWord, learnType, loading } =
-    useUserPage();
+  const {
+    redirect,
+    closeLearn,
+    todaysWord,
+    learnType,
+    loading,
+    breakDay,
+    setRedirect,
+  } = useUserPage();
 
   if (loading) return <Spiner color='#2e2757' />;
 
@@ -39,8 +48,8 @@ const UserPage: FC<HomePageProps> = () => {
         <>
           <Background />
           <Title>{t('todaysWord')}</Title>
-          <Card upper>
-            {!closeLearn ? (
+          {!closeLearn && !breakDay && (
+            <Card upper>
               <S.WordCard>
                 <S.BasicWord>{todaysWord?.basicWord}</S.BasicWord>
                 <S.TransWord>
@@ -50,20 +59,12 @@ const UserPage: FC<HomePageProps> = () => {
                   {learnType === learnTypes.QUIZ && <QuizView />}
                 </S.TransWord>
               </S.WordCard>
-            ) : (
-              <ShowWordView />
-            )}
-          </Card>
+            </Card>
+          )}
           {/* {!closeLearn ? <ButtonsSection /> : <CloseLearn />} */}
+          {!breakDay ? <ButtonsSection /> : <BreakDayView />}
 
-          <ModalForm type='addWord' top={20} />
-          <ModalForm type='preferences' top={45} modalSize='4xl' />
-          <AsideButton
-            small
-            label={t(`logout`)}
-            top={80}
-            onClick={handleLogout}
-          />
+          <AsideMenu setRedirect={setRedirect} type='user' />
 
           <BottomMenu>
             <S.MenuBottomWrapper>

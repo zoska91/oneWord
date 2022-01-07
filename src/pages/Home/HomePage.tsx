@@ -10,6 +10,7 @@ import BottomMenu from 'components/BottomMenu/BottomMenu';
 import BottomMenuAuth from 'components/BottomMenu/BottomMenuAuth';
 
 import * as S from './HomePage.css';
+import AsideMenu from 'components/AsideMenu/AsideMenu';
 
 interface HomePageProps {}
 
@@ -32,8 +33,8 @@ const HomePage: FC<HomePageProps> = () => {
         </S.WelcomeCard>
       </Card>
 
-      <ModalForm type='login' top={20} />
-      <ModalForm type='signin' top={38} />
+      <AsideMenu type='home' />
+
       <BottomMenu>
         <S.MenuBottomWrapper>
           <BottomMenuAuth />

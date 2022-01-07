@@ -3,8 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 import { useGlobalState } from 'state';
 
-import { logOut } from 'db/API/auth';
-import { getTodayWordAPI } from 'db/API/words';
+import { checkIsBreakDay, getTodayWordAPI } from 'db/API/words';
 import { getUserSettingsAPI } from 'db/API/settings';
 import { INotification } from 'types/api';
 import { learnTypes } from 'constants/constants';
@@ -15,6 +14,7 @@ const useUserPage = () => {
 
   const [learnType, setLearnType] = useGlobalState('learnType');
   const [closeLearn, setCloseLearn] = useGlobalState('closeLearn');
+  const [breakDay, setBreakDay] = useGlobalState('breakDay');
   const [todaysWord, setTodaysWordData] = useGlobalState('todaysWord');
 
   const getTodayWord = async () => {
@@ -23,6 +23,12 @@ const useUserPage = () => {
   };
 
   const getCurrentLearnType = async () => {
+    const isBrakDay = await checkIsBreakDay();
+    if (isBrakDay) {
+      setBreakDay(true);
+      return;
+    }
+
     const { data } = await getUserSettingsAPI();
 
     // const times: { time: number; type: keyof typeof learnTypes }[] =
@@ -60,12 +66,15 @@ const useUserPage = () => {
     });
   }, []);
 
-  const handleLogout = async () => {
-    const result = await logOut();
-    if (result === 'success') setRedirect(true);
+  return {
+    redirect,
+    closeLearn,
+    todaysWord,
+    learnType,
+    loading,
+    breakDay,
+    setRedirect,
   };
-
-  return { redirect, handleLogout, closeLearn, todaysWord, learnType, loading };
 };
 
 export default useUserPage;

@@ -1,6 +1,6 @@
 export const en = {
   welcome: `It's a pleasure to see you here.`,
-  welcome2: `I hope you want learn something!`,
+  welcome2: `I hope you want to learn something!`,
   welcome3: `You don't have much time?`,
   welcome4: `Great! One word a day it's enough!`,
   welcome5: `Let's start`,
@@ -17,7 +17,7 @@ export const en = {
     correctAnswer: `Greate! It's good answer`,
   },
   closeLearn: `Take a break! We will let you know when it's time to learn :)`,
-
+  breakDayView: `Today is a break day! Just rest!`,
   buttons: {
     close: 'Close',
     submit: 'Submit',
@@ -71,6 +71,13 @@ export const en = {
     emailPlaceholder: 'Set login',
     passwordLabel: 'Password',
     passwordPlaceholder: 'Set password',
+
+    //words list
+    wordsListTitle: 'Words List',
+    editWordTitle: 'Edit Word',
+
+    statusLabel: 'Status',
+    statusPlaceholder: 'Select status',
   },
   days: {
     1: 'Monday',
@@ -93,5 +100,12 @@ export const en = {
     addWord: 'add word',
     wordsList: 'words list',
     logout: 'logout',
+    preferences: 'preferences',
   },
+  statusDict: {
+    new: 'New',
+    today: 'Today',
+    done: 'Learned',
+  },
+  wordCreated: 'A new word has been added ',
 };

@@ -14,8 +14,7 @@ const QuizView: FC<QuizViewProps> = () => {
 
   return (
     <>
-      {console.log(todaysWord.randomWords)}
-      {todaysWord.randomWords.length < 1 ? (
+      {todaysWord?.randomWords?.length < 1 ? (
         <Spiner />
       ) : (
         <S.SingleAnswerWrapper>

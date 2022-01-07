@@ -18,6 +18,7 @@ import { getCurrentUser } from './auth';
 import { IInputsAddWord } from 'components/ModalForm/formTypes';
 import { ITodayWord } from 'types/api';
 
+// get options to quiz view
 export const getShuffleWordsAPI = async () => {
   const { selectLanguage } = await getUserSettingsAPI();
   const { userId } = getCurrentUser();
@@ -50,6 +51,15 @@ export const getShuffleWordsAPI = async () => {
   }));
 };
 
+export const checkIsBreakDay = async () => {
+  const { data } = await getUserSettingsAPI();
+  const breakDay = data.breakDay;
+  const todayDate = new Date();
+  const todayDay = todayDate.getDay();
+  return +breakDay === +todayDay;
+};
+
+// main function to initial get word
 export const getTodayWordAPI = async () => {
   const { userId } = getCurrentUser();
 
@@ -82,6 +92,7 @@ export const getTodayWordAPI = async () => {
   }
 };
 
+// get word when its first time in current day
 export const getRandomWordAPI = async () => {
   const { selectLanguage } = await getUserSettingsAPI();
   const { userId } = getCurrentUser();
@@ -133,15 +144,16 @@ export const updateWordAPI = async (
   id: string,
   dataToUpdate: IInputsAddWord
 ) => {
-  const washingtonRef = doc(db, 'words', id);
+  const docRef = doc(db, 'words', id);
 
   // Set the "capital" field of the city 'DC'
   try {
-    await updateDoc(washingtonRef, {
+    const resp = await updateDoc(docRef, {
       ...dataToUpdate,
       updatedDate: serverTimestamp(),
     });
     console.log('dodano');
+    console.log(resp);
   } catch (e) {
     createNotification('Something went wrong', 'error');
   }
@@ -162,8 +174,30 @@ export const changeStatusAPI = async (wordId: string, status: number) => {
   }
 };
 
+export const getAllWordsOfCurrentUser = async () => {
+  const { userId } = getCurrentUser();
+  const { selectLanguage } = await getUserSettingsAPI();
+
+  const q = query(
+    collection(db, 'words'),
+    where('addLang', '==', selectLanguage),
+    where('userId', '==', userId)
+  );
+
+  const querySnapshot = await getDocs(q);
+
+  // TODO ts - problem with types from firestore
+  let words: any[] = [];
+
+  querySnapshot.forEach(doc => {
+    words = [...words, { ...doc.data(), wordId: doc.id }];
+  });
+  return words;
+};
+
 export const deleteWordAPI = async (id: string) => {
-  await deleteDoc(doc(db, 'word', id));
+  console.log(id);
+  await deleteDoc(doc(db, 'words', id));
 };
 
 //status

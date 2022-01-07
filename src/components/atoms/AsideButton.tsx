@@ -4,22 +4,18 @@ import { device } from 'styles/devices';
 
 interface AsideButtonProps {
   label: string;
-  top: number;
   onClick: () => void;
   small?: boolean;
 }
 
 interface WrapperStyled {
-  top: number;
   small?: boolean;
 }
 
 const Wrapper = styled.div<WrapperStyled>`
   background-color: ${({ theme }) => theme.colorSecondary};
   color: ${({ theme }) => theme.colorLight};
-  position: fixed;
-  top: ${({ top }) => top}vh;
-  right: 0;
+  margin-bottom: 50px;
   writing-mode: vertical-lr;
   padding: ${({ small }) => (small ? '20px 10px' : '30px 20px')};
   transform: skewY(-10deg);
@@ -43,9 +39,9 @@ const Wrapper = styled.div<WrapperStyled>`
   }
 `;
 
-const AsideButton: FC<AsideButtonProps> = ({ label, top, onClick, small }) => {
+const AsideButton: FC<AsideButtonProps> = ({ label, onClick, small }) => {
   return (
-    <Wrapper top={top} onClick={onClick} small={small}>
+    <Wrapper onClick={onClick} small={small}>
       {label}
     </Wrapper>
   );
