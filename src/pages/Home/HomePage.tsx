@@ -5,7 +5,6 @@ import { Title } from 'components/atoms/Title';
 import Background from 'components/atoms/Background';
 import Card from 'components/Card/Card';
 import Button from 'components/atoms/Button';
-import ModalForm from 'components/ModalForm/ModalForm';
 import BottomMenu from 'components/BottomMenu/BottomMenu';
 import BottomMenuAuth from 'components/BottomMenu/BottomMenuAuth';
 

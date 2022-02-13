@@ -21,7 +21,11 @@ const AddWordForm: FC<AddWordFormProps> = ({ onClose }) => {
 
   const { addLangOptions } = useGenerateOptionsFields();
 
-  const methods = useForm<IInputsAddWord>();
+  const methods = useForm<IInputsAddWord>({
+    defaultValues: {
+      addLang: 'en',
+    },
+  });
   const { handleSubmit, reset } = methods;
 
   const onSubmit: SubmitHandler<IInputsAddWord> = data => {

@@ -12,3 +12,4 @@ to do:
 
 - PWA (offline, notifications)
 - quiz from all words
+- reminder day - customization
