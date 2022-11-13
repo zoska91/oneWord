@@ -3,10 +3,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { IAuth } from '../ModalForm/formTypes';
-import { loginByEmail, singInByGoogle } from 'db/API/auth';
+import {  singInByGoogle } from 'db/API/auth';
 import { createNotification } from 'common/notifications';
-import { createUserWithEmailAndPassword, getAuth } from '@firebase/auth';
 import { addDefaultSettingsIfNotExistsAPI } from 'db/API/settings';
+import { api } from 'api';
 
 const useSign = () => {
   const { t } = useTranslation();
@@ -14,25 +14,17 @@ const useSign = () => {
   const methods = useForm<IAuth>();
   const { handleSubmit } = methods;
 
-  const onSubmit: SubmitHandler<IAuth> = ({ email, password }) => {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        if (user.uid) {
-          loginByEmail(email, password);
-          addDefaultSettingsIfNotExistsAPI(user.uid);
-        }
-      })
-      .catch(error => {
-        if (error.code === 'auth/weak-password')
-          createNotification(t('api.weakPassword'), 'error');
+  const onSubmit: SubmitHandler<IAuth> = async ({ email, password }) => {
+    try {
+      const {data} = await api.register({email, password})
+      if(data.message ==='success') setRedirect(true);
+      else createNotification(t('api.error'), 'error');
 
-        if (error.code === 'auth/email-already-in-use')
-          createNotification(t('api.existsMail'), 'error');
+    } catch(e) {
+      // @ts-ignore
+      if(e.response.data.message ) createNotification(e.response.data.message, 'error');
+    }
 
-        throw { code: error.code, error: error.message };
-      });
   };
 
   const googleSubmit = async () => {

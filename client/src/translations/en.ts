@@ -94,7 +94,7 @@ export const en = {
     error: 'Something went wrong',
     weakPassword: 'Password should be at least 6 characters',
     existsMail: 'This mail already exists',
-    userNotFound: 'User not found',
+    userNotFound: 'Incorrect user or password',
   },
   actionsBottomMenu: {
     addWord: 'add word',

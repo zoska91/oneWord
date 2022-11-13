@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { loginByEmail, singInByGoogle } from 'db/API/auth';
+import {  singInByGoogle } from 'db/API/auth';
 import { createNotification } from 'common/notifications';
 import { addDefaultSettingsIfNotExistsAPI } from 'db/API/settings';
 import { IAuth } from 'components/ModalForm/formTypes';
+import { api } from 'api';
 
 const useLogin = () => {
   const { t } = useTranslation();
@@ -18,26 +19,15 @@ const useLogin = () => {
 
   const onSubmit: SubmitHandler<IAuth> = async ({ email, password }) => {
     try {
-      const resp: any = await loginByEmail(email, password);
+      const {data} = await api.login({email, password})
 
-      if (resp.code === 'auth/user-not-found') {
-        createNotification(t('auth.userNotFound'), 'error');
-        return;
-      }
+      if(data.message ==='success') setRedirect(true);
+      else createNotification(t('api.error'), 'error');
 
-      if (resp.code === 'auth/wrong-password') {
-        createNotification(t('auth.wrongPassword'), 'error');
-        return;
-      }
-
-      if (resp.code) {
-        createNotification(t('auth.error'), 'error');
-        return;
-      }
-
-      setRedirect(true);
-    } catch (e) {
-      console.error(e);
+    } catch(e) {
+      // @ts-ignore
+      if(e.response.status === 401 )
+      createNotification(t('api.userNotFound'), 'error');
     }
   };
 
