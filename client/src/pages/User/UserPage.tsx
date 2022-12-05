@@ -28,15 +28,8 @@ interface HomePageProps {}
 const UserPage: FC<HomePageProps> = () => {
   const { t } = useTranslation();
 
-  const {
-    redirect,
-    closeLearn,
-    todaysWord,
-    learnType,
-    loading,
-    breakDay,
-    setRedirect,
-  } = useUserPage();
+  const { redirect, closeLearn, todaysWord, learnType, loading, breakDay, setRedirect } =
+    useUserPage();
 
   if (loading) return <Spiner color='#2e2757' />;
 

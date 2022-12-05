@@ -16,7 +16,6 @@ function App() {
     <ChakraProvider>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {/* <button onClick={getUserSettingsAPI}>get user</button> */}
         <Router>
           <Switch>
             <Route exact path={routes.home} component={HomePage} />
