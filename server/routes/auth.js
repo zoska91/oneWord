@@ -22,6 +22,7 @@ import bcrypt from 'bcrypt'
 
 import { UserModel } from '../models/user.js'
 import config from '../config.js'
+import { SettingsModel } from '../models/settings.js'
 
 const router = express.Router()
 
@@ -99,8 +100,17 @@ router.post('/register', async (req, res) => {
     const errors = newUser.validateSync()
     if (errors) return res.status(400).json(errors)
 
-    newUser.save((err) => {
+    newUser.save((err, data) => {
       if (err) console.log(err)
+      const defaultSettings = new SettingsModel({
+        userId: data._id,
+      })
+
+      // SettingsModel.remove({})
+
+      defaultSettings.save((err) => {
+        if (err) console.log(err)
+      })
     })
 
     res.json({ message: 'success' })
