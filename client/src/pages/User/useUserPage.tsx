@@ -42,9 +42,7 @@ const useUserPage = () => {
       .reverse();
 
     for (const noti of times) {
-      const currentTime =
-        Number(new Date().getHours()) * 60 * 60 +
-        Number(new Date().getMinutes());
+      const currentTime = Number(new Date().getHours()) * 60 * 60 + Number(new Date().getMinutes());
 
       if (currentTime > noti.time) {
         //  @ts-ignore
@@ -53,6 +51,7 @@ const useUserPage = () => {
       }
     }
   };
+
   useEffect(() => {
     const auth = getAuth();
     setLoading(true);
