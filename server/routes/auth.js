@@ -50,25 +50,42 @@ passport.use(
   })
 )
 
-passport.serializeUser((userObj, done) => {
-  done(null, userObj)
+passport.serializeUser(function (user, done) {
+  done(null, user.id)
 })
-passport.deserializeUser((userObj, done) => {
-  done(null, userObj)
+
+passport.deserializeUser(function (id, done) {
+  UserModel.findById(id, function (err, user) {
+    done(err, user)
+  })
+})
+
+router.get('/user', async (req, res) => {
+  if (req.user) res.json({ user: req.user })
+  else res.status(401).json({ message: 'no logged user' })
 })
 
 router.post('/login', passport.authenticate('local', {}), (req, res) => {
-  console.log(req.session)
   res.json({ message: 'success' })
+})
+
+router.post('/logout', (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err)
+    }
+    res.json({ message: 'logout success' })
+  })
 })
 
 router.post('/register', async (req, res) => {
   const { username, password } = req.body
 
   const findUser = await UserModel.findOne({ username })
+
   if (findUser)
     return res
-      .status(403)
+      .status(400)
       .json({ message: 'this user is already in the database' })
 
   bcrypt.hash(password, config.saltRounds, function (err, hash) {
@@ -80,7 +97,7 @@ router.post('/register', async (req, res) => {
     })
 
     const errors = newUser.validateSync()
-    if (errors) return res.status(402).json(errors)
+    if (errors) return res.status(400).json(errors)
 
     newUser.save((err) => {
       if (err) console.log(err)

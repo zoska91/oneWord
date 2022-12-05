@@ -1,5 +1,6 @@
 const config = {
-  db: "string",
-};
+  db: 'string',
+  saltRounds: 0, // number var
+}
 
-export default config;
+export default config

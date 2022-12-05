@@ -9,6 +9,7 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import cors from 'cors'
 import passport from 'passport'
 import session from 'express-session'
+import MongoStore from 'connect-mongo'
 
 import config from './config.js'
 import { swaggerConfig } from './swagger.config.js'
@@ -36,16 +37,18 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs))
 app.use(cors())
 app.use(
   session({
-    secret: 'secret',
+    secret: 'top top',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: config.db,
+    }),
   })
 )
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(passport.authenticate('session'))
 
 app.use('/api/auth', authRouter)
-
-// passport.use(new LocalStrategy(authUser))
 
 export default app
