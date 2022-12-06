@@ -19,8 +19,6 @@ router.get('/user-settings', async (req, res) => {
 
 router.put('/user-settings', async (req, res) => {
   try {
-    console.log(req.body)
-
     const userId = req.user._id.valueOf()
 
     await SettingsModel.findOneAndUpdate({ userId }, req.body)
