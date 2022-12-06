@@ -80,17 +80,19 @@ router.post('/logout', (req, res, next) => {
 })
 
 router.post('/register', async (req, res) => {
-  const { username, password } = req.body
+  try {
+    const { username, password } = req.body
+    const findUser = await UserModel.findOne({ username })
 
-  const findUser = await UserModel.findOne({ username })
+    if (findUser)
+      return res
+        .status(400)
+        .json({ message: 'this user is already in the database' })
 
-  if (findUser)
-    return res
-      .status(400)
-      .json({ message: 'this user is already in the database' })
+    const hash = await bcrypt.hash(password, config.saltRounds)
 
-  bcrypt.hash(password, config.saltRounds, function (err, hash) {
-    if (err) return res.status(500).json(err)
+    if (!hash)
+      return res.status(500).json('Something is wrong with your password')
 
     const newUser = new UserModel({
       username,
@@ -100,21 +102,20 @@ router.post('/register', async (req, res) => {
     const errors = newUser.validateSync()
     if (errors) return res.status(400).json(errors)
 
-    newUser.save((err, data) => {
-      if (err) console.log(err)
-      const defaultSettings = new SettingsModel({
-        userId: data._id,
-      })
+    const userData = await newUser.save()
+    if (!userData)
+      return res.status(400).json('Something wrong with saving user')
 
-      // SettingsModel.remove({})
-
-      defaultSettings.save((err) => {
-        if (err) console.log(err)
-      })
+    const defaultSettings = new SettingsModel({
+      userId: userData._id,
     })
+    defaultSettings.save()
 
     res.json({ message: 'success' })
-  })
+  } catch (e) {
+    console.log(e)
+    res.status(500).json(e)
+  }
 })
 
 export default router
